@@ -84,6 +84,7 @@ public class UserController {
 	public String showTeamProfile(ModelMap model,HttpSession session) {
 		User user = (User)session.getAttribute("user");		
 		Team specificTeam = teamDao.getTeam(user);
+		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
 		model.put("team", specificTeam);
 		return "teamProfile";
 	}
@@ -162,7 +163,8 @@ public class UserController {
 						}
 					}	
 					model.put("tournament", specificTournament);	
-					return "tournamentProfile";
+					
+					response.sendRedirect("tournamentProfile.htm");
 					
 					
 				}
@@ -175,8 +177,7 @@ public class UserController {
 							response.sendRedirect("preTeamForm.htm");					
 					}
 					else {
-						model.put("team",specificTeam);
-						return "teamProfile";
+						response.sendRedirect("teamProfile.htm");
 					}
 
 				}
@@ -249,8 +250,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/createPlayer.htm")
-	public String createplayer(Player player) {
+	public String createplayer(Player player,HttpSession session , ModelMap model,HttpServletResponse response) {
+		User user = (User)session.getAttribute("user");		
+		Team specificTeam = teamDao.getTeam(user);
+		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
+		model.put("team", specificTeam);
 		playerDao.createPlayer(player);
+		try {
+			response.sendRedirect("teamProfile.htm");
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 		return "teamProfile";
 	}
 	

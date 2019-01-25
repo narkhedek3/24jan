@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spr" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="dto.Team" %>
+<%@ page import="dto.Player" %>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -81,6 +83,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			</div>
 			<div>
+				<%
+					List<Player> playerList = (List<Player>)session.getAttribute("playerList");
+				
+				%>
 				<table class="table table-sm table-primary">
 					<thead>
 						<tr>
@@ -90,21 +96,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<th scope="col">Runs</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody  id="playerTable">
 						
+						<%
+							for(Player player : playerList)
+							{
+								
+						
+						%>
 						<tr>
-							<th scope="row">1</th>
+							<th scope="row"><%= player.getPlayerId() %></th>
+							<td><%= player.getPlayerName() %></td>
 							<td></td>
-							<td>12</td>
 							<td>50</td>
 						</tr>
+						<%
+							}
 						
+						%>
 					</tbody>
 				</table>
 			</div>
 			
 			<div>
-				<a class="btn btn-primary"  href="playerForm.htm">Add Player</a>
+				<a class="btn btn-primary"  href="playerForm.htm" onclick="return fullTeam(this)">Add Player</a>
 			</div>
 
 		</div>
@@ -117,7 +132,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //footer -->
 
 	
-	
+	<script type="text/javascript">
+		function fullTeam(buttonRef){
+				var teamTable = document.getElementById("playerTable")
+				if(teamTable.childElementCount>10){
+					buttonRef.disabled=true;
+					alert("Not more than 11 players");
+					return false;
+					
+					}
+				return true;
+			}
+		
+	</script>
 
 
 
