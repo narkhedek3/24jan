@@ -69,10 +69,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="login-form">
 						<spr:form commandName="team" action="postTeamForm.htm"
 							method="post">
-							<spr:input placeholder="Team Name" required="" path="teamName" />
+							<spr:input placeholder="Team Name" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" required="" path="teamName" />
 							<%User user = (User)session.getAttribute("user"); %>
 							<spr:input placeholder="Email Id" required="" readonly="true" path="emailId" value="<%=user.getEmailId()%>" />						
-							<input type="text" placeholder="Location" />
+							<input type="text" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" placeholder="Location" />
 							<div class="tp">
 								<input type="submit" value="Create">
 							</div>

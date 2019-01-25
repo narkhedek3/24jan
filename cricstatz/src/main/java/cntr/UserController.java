@@ -34,9 +34,9 @@ public class UserController {
 	private UserDao userDao;
 	@Autowired
 	private PlayerDao playerDao;
-	
-	
-	
+
+
+
 
 	public PlayerDao getPlayerDao() {
 		return playerDao;
@@ -79,7 +79,7 @@ public class UserController {
 
 		return "index";
 	}
-	
+
 	@RequestMapping(value="/teamProfile.htm")
 	public String showTeamProfile(ModelMap model,HttpSession session) {
 		User user = (User)session.getAttribute("user");		
@@ -88,7 +88,7 @@ public class UserController {
 		model.put("team", specificTeam);
 		return "teamProfile";
 	}
-	
+
 	@RequestMapping(value="/tournamentProfile.htm")
 	public String showTournamnetProfile(ModelMap model,HttpSession session) {
 		User user = (User)session.getAttribute("user");		
@@ -96,47 +96,47 @@ public class UserController {
 		model.put("tournament", specificTournament);
 		return "tournamentProfile";
 	}
-	
+
 	@RequestMapping(value="/loginPage.htm")
 	public String loginform(ModelMap model) {
 		model.put("user", new User());
 		return "loginPage";
 	}
-	
+
 	@RequestMapping(value="/signUpPage.htm")
 	public String SignUpform(ModelMap model) {
 		model.put("user", new User());
 		return "signUpPage";
 	}
-	
+
 	@RequestMapping(value="/signup.htm")
 	public String CreateUser(final User user,  ModelMap model) {
-		
+
 		try
 		{
-		
+
 			User tempUser = userDao.selectUser(user.getEmailId());
 			if(tempUser.getEmailId().equals(user.getEmailId()))
 			{
 				model.put("msg", "Duplicate");
 				return "signUpPage";
 			}
-		
-		
+
+
 		}
 		catch(Exception e)
 		{
-		
-		//validation
-		
-		userDao.createUser(user);
-		
+
+			//validation
+
+			userDao.createUser(user);
+
 		}
-		
+
 		return "loginPage";
 	}
-	
-	
+
+
 	@RequestMapping(value="/loginStatus.htm")
 	public String validateUser(final User user,ModelMap model,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try
@@ -147,7 +147,7 @@ public class UserController {
 				model.put("user", user);
 				return "loginPage";
 			}
-			
+
 			for(User u : list) 
 			{
 				if(u.getUserRole().equals("Tournament Representative"))
@@ -163,18 +163,18 @@ public class UserController {
 						}
 					}	
 					model.put("tournament", specificTournament);	
-					
+
 					response.sendRedirect("tournamentProfile.htm");
-					
-					
+
+
 				}
 				else {				
 					session.setAttribute("user", u);
-					
+
 					Team specificTeam = teamDao.getTeam(u);					
-					
+
 					if(specificTeam==null) {					
-							response.sendRedirect("preTeamForm.htm");					
+						response.sendRedirect("preTeamForm.htm");					
 					}
 					else {
 						response.sendRedirect("teamProfile.htm");
@@ -183,14 +183,14 @@ public class UserController {
 				}
 			}
 		}catch(Exception exp){
-			return "errorPage";
+
 		}	
-		
+
 		return "loginPage";
-		
+
 	}
-	
-	
+
+
 	@RequestMapping(value="/signOut.htm")
 	public void signout(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		session.invalidate(); 
@@ -203,8 +203,8 @@ public class UserController {
 	}	
 
 
-	
-	
+
+
 	@RequestMapping(value="/livescores.htm")
 	public String showLiveScores() {
 
@@ -225,22 +225,34 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/tournaments.htm")
-	public String showTournamentList(ModelMap model) {
+	public String showTournamentList(ModelMap model,HttpSession session,HttpServletResponse response,HttpServletRequest request) {
 		List<Tournament> tournamentList = tournamentsDao.selectTournaments();
-		model.put("tournamentList",tournamentList);
+		if(session.getAttribute("user")!=null)
+		{
+			User user = (User)session.getAttribute("user");		
+			Team currentTeam = teamDao.getTeam(user);
+			System.out.println(currentTeam+"*+**+*+*+*+*++*+*+*+**++**+*");
+			model.addAttribute("teams", currentTeam);
+			model.addAttribute("currentUser",session.getAttribute("user"));
+			model.addAttribute("userRole",user.getUserRole());
+		}
+		
+		model.addAttribute("team", new Team());
+		model.addAttribute("tournamentList",tournamentList);
+		model.put("tournament", new Tournament() );
 		return "tournaments";
 	}
-	
+
 	@RequestMapping(value="/playersList.htm")
 	public String showplayersList(ModelMap model) {
 		List<Team> teamList = teamDao.selectTeam();
 		model.put("teamList", teamList);
 		return "playersList";
 	}
-	
+
 	@RequestMapping(value="/playerForm.htm")
 	public String showplayerForm(ModelMap model,HttpSession session) {
-		
+
 		User user = (User)session.getAttribute("user");
 		Team specificTeam = teamDao.getTeam(user);
 		Player player  = new Player();
@@ -248,7 +260,7 @@ public class UserController {
 		model.put("player", player);
 		return "playerForm";
 	}
-	
+
 	@RequestMapping(value="/createPlayer.htm")
 	public String createplayer(Player player,HttpSession session , ModelMap model,HttpServletResponse response) {
 		User user = (User)session.getAttribute("user");		
@@ -259,40 +271,61 @@ public class UserController {
 		try {
 			response.sendRedirect("teamProfile.htm");
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 		return "teamProfile";
 	}
-	
-	
-	
+
+
+
 	@RequestMapping(value="/preTeamForm.htm")
 	public String showTeamForm(ModelMap model) {
 		model.put("team", new Team());
 		return "teamForm";
 	}
-	
+
 	@RequestMapping(value="/postTeamForm.htm")
 	public String TeamFormSuccess(Team team,ModelMap model) {
 		teamDao.createTeam(team);
 		model.put("team", team);
 		return "teamProfile";
 	}
-	
+
 	@RequestMapping(value="/teamList.htm")
 	public String showteamList(ModelMap model) {
 		List<Team> teamList = teamDao.selectTeam();
 		model.put("teamList", teamList);
 		return "teamList";
 	}
-	
+
+
+	@RequestMapping(value="/teamRegistration.htm")
+	public String teamRegistration(Tournament tournament,HttpServletResponse response,HttpSession session,HttpServletRequest request) {
+		
+		try {
+			
+			
+			System.out.println(tournament+"********************************************");
+			User user = (User)session.getAttribute("user");
+			Team currentTeam = teamDao.getTeam(user);
+			currentTeam.setTournamentId(tournament.getTournamentId());
+			teamDao.updateTeam(currentTeam);
+			
+			response.sendRedirect("tournaments.htm");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return "tournaments";
+	}
+
 	@RequestMapping(value="/viewScoreCard.htm")
 	public String showScoreCard() {
 
 		return "scoreCard";
 	}
-	
+
 	@RequestMapping(value="/about.htm")
 	public String showabout() {
 

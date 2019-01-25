@@ -44,7 +44,25 @@ public class TeamDao {
 		});
 	}
 
+	
+	
+	public void updateTeam(final Team team) {
+		hibernateTemplate.execute(new HibernateCallback<List<Team>>() {
 
+			public List<Team> doInHibernate(Session session) throws HibernateException {
+				System.out.println("****************************");
+				Transaction t = session.beginTransaction();
+				session.update(team);
+				t.commit();
+				session.flush();
+				session.close();
+				return null;
+			}
+		});
+	}
+		
+	
+	
 	public List<Team> selectTeam() {
 
 		List<Team> list = hibernateTemplate.execute(new HibernateCallback<List<Team>>() {
@@ -67,17 +85,17 @@ public class TeamDao {
 	public Team getTeam(User user) {		
 		Team team = hibernateTemplate.execute(new HibernateCallback<Team>(){			
 			public Team doInHibernate(Session session) throws HibernateException {
-				System.out.println("getTeam method 1");
+				
 				Transaction t = session.beginTransaction();
 				Query q = session.createQuery("from Team where emailId = ?");
 				q.setString(0,user.getEmailId());
-				System.out.println(user.getEmailId()+"---------------------------");
+				
 				List<Team> teamList = q.list();				
 				if(!teamList.isEmpty())
 				{
 					for(Team team : teamList)
 					{
-						System.out.println(team+"---------------------------");
+						
 						t.commit();
 						session.flush();
 						session.close();

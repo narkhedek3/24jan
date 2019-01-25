@@ -70,7 +70,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>NUMBER
 								OF PLAYERS : </li>
+							<%
+								if(team.getTournamentId()!=0){
+							%>
 							
+							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+							Tournament ID : <%= team.getTournamentId() %> 
+							</li>
+							<% } %>
 							<li><i class="fa fa-long-arrow" aria-hidden="true"></i>
 								<button class="btn btn-primary">EDIT PROFILE</button></li>
 						</ul>

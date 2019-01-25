@@ -42,7 +42,7 @@
 			commandName="tournament" onsubmit="return validate()">
 			<div class="form-group">
 				<label>Tournament Name</label>
-				<spr:input type="text" id="name" class="form-control" path="tournamentName" />
+				<spr:input type="text" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" id="name" class="form-control" path="tournamentName" />
 			</div>
 			<%User user = (User)session.getAttribute("user"); %>
 		 	<div class="form-group">
@@ -85,22 +85,22 @@
 			
 			<div class="form-group">
 				<label>Entry Fee</label>
-				<spr:input type="text" class="form-control" path="entryFee" maxlength="5"/>
+				<spr:input type="number"  min="1" max="1000" class="form-control" path="entryFee" />
 			</div>
 			
 			<div class="form-group">
 				<label>Winning Prize</label>
-				<spr:input type="number" class="form-control" path="winningPrize" />
+				<spr:input type="number" min="1" max="10000" class="form-control" path="winningPrize" />
 			</div>
 			
 			<div class="form-group">
 				<label>Location</label>
-				<spr:input type="text" class="form-control" path="location" />
+				<spr:input type="text" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" class="form-control" path="location" />
 			</div>
 			
 			<div class="form-group">
 				<label>Address</label>
-				<spr:input type="text" class="form-control" path="address" />
+				<spr:input type="text" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" class="form-control" path="address" />
 			</div>
 			
 			
