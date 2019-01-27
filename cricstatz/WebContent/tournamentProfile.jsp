@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spr" uri="http://www.springframework.org/tags/form"%>
+<%@page import="dto.Tournament"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.Team"%>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -31,6 +36,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 
 <body>
+
+	<%
+		List<Team> teamList=(List<Team>)session.getAttribute("teamList");
+		Tournament tournament=(Tournament)request.getAttribute("tournament");
+		System.out.println(teamList);
+		
+	%>
+
+
+
 	<!-- banner -->
 	<jsp:include page="header.jsp"></jsp:include>
 
@@ -52,17 +67,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agile_team_grids_top">
 				<div class="col-md-6 w3ls_banner_bottom_left w3ls_courses_left">
 					<div class="w3ls_banner_bottom_right1">
-						<h2>TOURNAMENT NAME</h2>
+						<h2>TOURNAMENT NAME : </h2>
 
 						<ul class="some_agile_facts">
-							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT ID
-							</li>
-							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT NAME
-								OF PLAYERS</li>
-							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT LOCATION</li>
+							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT
+								ID: <%=tournament.getTournamentId() %></li>
+							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT
+								NAME: <%=tournament.getTournamentName()%></li>
+							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT
+								LOCATION <%=tournament.getLocation() %></li>
 							<li><i class="fa fa-long-arrow" aria-hidden="true"></i>
-								<button class="btn btn-primary">EDIT PROFILE</button></li>
+								<button class="btn btn-primary" data-toggle="modal" data-target="#myModalEdit" >EDIT PROFILE</button></li>
 						</ul>
+
+						<%-- <div>
+							<spr:form action="teamSelection.htm" method="post">
+								<spr:input path="Team1" />
+								<label >VS</label>
+								<spr:input path="Team2"/>
+								<input type="submit" value="Submit">
+							</spr:form>
+						</div> --%>
 					</div>
 				</div>
 				<div class="col-md-6 agileits_courses_right">
@@ -72,36 +97,57 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			</div>
 			<div>
+
+
 				<table class="table table-sm table-primary">
 					<thead>
 						<tr>
-							<th scope="col">tournament ID</th>
-							<th scope="col">tournament name</th>
-							<th scope="col">Tournament Start Date</th>
-							<th scope="col">Tournament End Date</th>
+							<th scope="col">Team ID</th>
+							<th scope="col">Team name</th>
+
 						</tr>
 					</thead>
+
 					<tbody>
+						<%
+						  for(Team team : teamList)
+						  {
+							  
+						  
+						%>
 						<tr>
-							<th scope="row">1</th>
-							<td>abc</td>
-							<td>2019-08-23</td>
-							<td>2019-08-21</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>knc</td>
-							<td>2019-08-23</td>
-							<td>2019-08-21</td>
+							<th scope="row"><%=team.getTeamId() %></th>
+							<td><%=team.getTeamName()%></td>
+
 						</tr>
 
+						<%
+							}
+						%>
 					</tbody>
 				</table>
+
 			</div>
-			
+
 			<div>
-				<button class="btn btn-primary"  data-toggle="modal" data-target="#myModal4">Schedule Tournament</button>
+				<button class="btn btn-primary" data-toggle="modal"
+					data-target="#myModal4">Schedule Tournament</button>
 			</div>
+
+			<%
+				if(!teamList.isEmpty()){
+			%>
+			<div>
+				<spr:form action="teamSelection.htm" method="post" commandName="match" >
+					<spr:input path="team1Id" />
+					<label>VS</label>
+					<spr:input path="team2Id" />
+					<input type="submit" value="Submit">
+				</spr:form>
+			</div>
+			<%
+				}
+			%>
 
 		</div>
 	</div>
@@ -112,8 +158,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<jsp:include page="footer.jsp"></jsp:include>
 	<!-- //footer -->
 
-	
-	
+
+
 	<!-- Modal4 -->
 	<div class="modal fade" id="myModal4" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
@@ -122,14 +168,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 
-					
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- //Modal4 -->
+
+
+	 <!-- tournamentEditModal -->
+	<div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+					<div class="signin-form profile">
+						<h3 class="agileinfo_sign">Sign Up</h3>
+						<div class="login-form">
+							<spr:form action="tournamentEditModal.htm" method="post" commandName="tournament">
+								TOURNAMENT emailID:<spr:input type="text"  path="emailId" readonly="true"/>
+								TOURNAMENT ID:<spr:input type="text"  path="tournamentId" readonly="true"/>   
+								TOURNAMENT NAME:<spr:input type="text"  path="tournamentName" required=""/>
+								TOURNAMENT LOCATION<spr:input type="text"  path="location" required=""/>
+								<input type="submit" value=" CHange">
+							</spr:form>
+						</div>
 						
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- //Modal4 -->
+	<!-- //tournamentEditModal --> --
+    
 
 	<!-- //bootstrap-pop-up -->
 

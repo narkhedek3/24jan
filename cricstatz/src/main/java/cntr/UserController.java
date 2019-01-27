@@ -21,6 +21,8 @@ import dto.Player;
 import dto.Team;
 import dto.Tournament;
 import dto.User;
+import dto.MatchDetails;
+
 
 
 @Controller
@@ -82,21 +84,42 @@ public class UserController {
 
 	@RequestMapping(value="/teamProfile.htm")
 	public String showTeamProfile(ModelMap model,HttpSession session) {
-		User user = (User)session.getAttribute("user");		
+		User user = (User)session.getAttribute("user");	
+		if(user!=null && user.getUserRole().equals("Team Representative"))
+		{	
+			
 		Team specificTeam = teamDao.getTeam(user);
 		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
 		model.put("team", specificTeam);
 		return "teamProfile";
+		}
+		model.put("user", new User());
+		return "loginPage";
 	}
 
 	@RequestMapping(value="/tournamentProfile.htm")
 	public String showTournamnetProfile(ModelMap model,HttpSession session) {
+		
 		User user = (User)session.getAttribute("user");		
+		if(user!=null && user.getUserRole().equals("Tournament Representative"))
+		{
 		Tournament specificTournament = tournamentsDao.getTournament(user); 
-		model.put("tournament", specificTournament);
+		
+		List<Team> teamList = tournamentsDao.getRegisteredTeams(specificTournament);
+		System.out.println(teamList+"++++++++++++++");
+		model.addAttribute("tournament", specificTournament);
+		model.put("match", new MatchDetails());
+		session.setAttribute("teamList", teamList);
 		return "tournamentProfile";
+		}
+		model.put("user", new User());
+		return "loginPage";
+		
 	}
 
+	
+	
+	
 	@RequestMapping(value="/loginPage.htm")
 	public String loginform(ModelMap model) {
 		model.put("user", new User());
@@ -204,7 +227,6 @@ public class UserController {
 
 
 
-
 	@RequestMapping(value="/livescores.htm")
 	public String showLiveScores() {
 
@@ -216,14 +238,61 @@ public class UserController {
 		model.put("tournament", new Tournament()); 
 		return "tournamentsRegistration";
 	}
+	
+	@RequestMapping(value="/teamSelection.htm")
+	public String teamSelect(MatchDetails match,ModelMap model) {
+		model.addAttribute("match",match);
+		return "scoreUpdater";
+	}
 
 	@RequestMapping(value="/postTournamentsRegistraion.htm")
-	public String showtournaments(Tournament tournament , ModelMap model) {
+	public String showtournaments(Tournament tournament , ModelMap model,HttpServletResponse response,HttpSession session) {
 		tournamentsDao.createTournament(tournament);
-		model.put("tournamnet",tournament);
+		
+		
+		User user = (User)session.getAttribute("user");		
+		Tournament specificTournament = tournamentsDao.getTournament(user); 
+		
+		List<Team> teamList = tournamentsDao.getRegisteredTeams(specificTournament);
+		System.out.println(teamList+"++++++++++++++");
+		model.addAttribute("tournament", specificTournament);
+		model.put("match", new MatchDetails());
+		session.setAttribute("teamList", teamList);
+		
+		
+		try {
+			response.sendRedirect("tournamentProfile.htm");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "tournamentProfile";
 	}
 
+	
+	@RequestMapping(value="/tournamentEditModal.htm")
+	public String tournamentEditModal(ModelMap model,Tournament tournament,HttpSession session,HttpServletResponse response) {
+		System.out.println(tournament+"*--*-**-*-*-*-*-*-**-***-**-*-*-**-*-");
+		tournamentsDao.updateTournament(tournament);
+		
+		User user = (User)session.getAttribute("user");		
+		Tournament specificTournament = tournamentsDao.getTournament(user); 
+		
+		List<Team> teamList = tournamentsDao.getRegisteredTeams(specificTournament);
+		System.out.println(teamList+"++++++++++++++");
+		model.addAttribute("tournament", specificTournament);
+		model.put("match", new MatchDetails());
+		session.setAttribute("teamList", teamList);
+		try {
+			response.sendRedirect("tournamentProfile.htm");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "tournamentProfile";
+	}
+	
+	
 	@RequestMapping(value="/tournaments.htm")
 	public String showTournamentList(ModelMap model,HttpSession session,HttpServletResponse response,HttpServletRequest request) {
 		List<Tournament> tournamentList = tournamentsDao.selectTournaments();
@@ -235,18 +304,24 @@ public class UserController {
 			model.addAttribute("teams", currentTeam);
 			model.addAttribute("currentUser",session.getAttribute("user"));
 			model.addAttribute("userRole",user.getUserRole());
+			model.addAttribute("tournament",new Tournament());
+			model.addAttribute("tournamentList",tournamentList);
+			
+			return "tournaments";
+
 		}
-		
-		model.addAttribute("team", new Team());
-		model.addAttribute("tournamentList",tournamentList);
-		model.put("tournament", new Tournament() );
+				
+		model.addAttribute("teams", new Team());
+		model.addAttribute("tournamentList",tournamentList);		
 		return "tournaments";
 	}
+	
+	
 
 	@RequestMapping(value="/playersList.htm")
-	public String showplayersList(ModelMap model) {
-		List<Team> teamList = teamDao.selectTeam();
-		model.put("teamList", teamList);
+	public String showplayersList(ModelMap model,HttpSession session) {
+		model.addAttribute("playerList", playerDao.selectAllPlayer());
+		System.out.println(playerDao.selectAllPlayer()+" contr----------------------");
 		return "playersList";
 	}
 
@@ -286,9 +361,22 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/postTeamForm.htm")
-	public String TeamFormSuccess(Team team,ModelMap model) {
+	public String TeamFormSuccess(Team team,ModelMap model,HttpSession session,HttpServletResponse response) {
 		teamDao.createTeam(team);
-		model.put("team", team);
+		
+		
+		User user = (User)session.getAttribute("user");		
+		Team specificTeam = teamDao.getTeam(user);
+		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
+		model.put("team", specificTeam);
+		
+		try {
+			response.sendRedirect("teamProfile.htm");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "teamProfile";
 	}
 

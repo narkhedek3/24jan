@@ -20,6 +20,7 @@ public class MatchDetails{
 	private long team2Id;
 	private long scheduleId;
 	private long roundNo;
+	
 	public long getMatchId() {
 		return matchId;
 	}

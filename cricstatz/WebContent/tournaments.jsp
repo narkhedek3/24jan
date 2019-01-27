@@ -65,6 +65,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		System.out.println(userRole+"***+++++++++++++++++++++++++");
 		if(list!=null)
 		{
+			System.out.println(userRole+"***+-----++++++++++++++++++++++++");
 			for(Tournament tournament: list)
 			{
 	%>
@@ -108,8 +109,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<div class="card-footer make-center">
 				<h6>
-					<%=tournament.getNumberOfTeams()%>
 					<%=team.getTournamentId() %>
+					<%=tournament.getTournamentId()%>
+					<%=team.getTournamentId()==tournament.getTournamentId() %>
 				</h6>
 
 
@@ -149,34 +151,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-	<!-- Modal5 -->
-	<div class="modal fade" id="myModal5" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-
-					<div class="signin-form profile">
-						<h3 class="agileinfo_sign">Register</h3>
-						<div class="login-form">
-							<form action="#" method="post">
-								<input type="checkbox" name="player1" value="Player1">Player1<br>
-
-								<input type="submit">
-							</form>
-
-
-
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- //Modal5 -->
 
 	<!-- //bootstrap-pop-up -->
 

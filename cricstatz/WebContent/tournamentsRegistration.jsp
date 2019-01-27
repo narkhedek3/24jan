@@ -102,10 +102,8 @@
 				<label>Address</label>
 				<spr:input type="text" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" class="form-control" path="address" />
 			</div>
-			
-			
-					 
-			<button type="submit" class="btn btn-primary">Submit</button>
+
+						<button type="submit" class="btn btn-primary">Submit</button>
 		</spr:form>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>

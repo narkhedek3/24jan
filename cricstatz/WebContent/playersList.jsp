@@ -68,6 +68,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</tr>
 			</thead>
 	<%  List<Player> list = (List<Player>)request.getAttribute("playerList");
+	System.out.println(list+"playerlist+**+*+**+*+*+*+**+*");
 		if(list!=null)
 		{
 			for(Player player: list)

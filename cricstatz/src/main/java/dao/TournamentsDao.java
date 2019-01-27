@@ -86,4 +86,40 @@ public class TournamentsDao {
 		});
 		return tournament;
 	}
+	
+	
+	
+	public List<Team> getRegisteredTeams(Tournament tournament) {
+
+		List<Team> list = hibernateTemplate.execute(new HibernateCallback<List<Team>>() {
+
+			public List<Team> doInHibernate(Session session) throws HibernateException {
+				Transaction t = session.beginTransaction();
+				Query q = session.createQuery("from Team where tournamentId = ?");
+				q.setLong(0,tournament.getTournamentId());
+				List<Team> teamList = q.list();
+				System.out.println(teamList+"++++++++++++++");
+				t.commit();
+				session.flush();
+				session.close();
+				return teamList;
+			}
+		});
+		return list;
+	}
+	
+	public void updateTournament(final Tournament tournament) {
+		hibernateTemplate.execute(new HibernateCallback<List<Tournament>>() {
+
+			public List<Tournament> doInHibernate(Session session) throws HibernateException {
+				System.out.println("****************************");
+				Transaction t = session.beginTransaction();
+				session.update(tournament);
+				t.commit();
+				session.flush();
+				session.close();
+				return null;
+			}
+		});
+	}
 }

@@ -5,7 +5,8 @@
 <html lang="zxx">
 
 <head>
-	<title>Tennis Court a Sports Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
+	<title>CricStatz</title>
+	
 	<!-- custom-theme -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

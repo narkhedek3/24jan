@@ -25,7 +25,6 @@ public class Team {
 	private int totalMatches;
 	private String totalMatchResults;
 	private double netRunRate;
-	
 	private long teamScore;
 	public Team() {
 		super();

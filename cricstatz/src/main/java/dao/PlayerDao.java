@@ -43,7 +43,7 @@ public class PlayerDao {
 		});
 	}
 
-	public List<Player> selectPlayer() {
+	public List<Player> selectAllPlayer() {
 
 		List<Player> list = hibernateTemplate.execute(new HibernateCallback<List<Player>>() {
 
@@ -51,6 +51,7 @@ public class PlayerDao {
 				Transaction t = session.beginTransaction();
 				Query q = session.createQuery("from Player");
 				List<Player> playerList = q.list();
+				System.out.println(playerList+"  ///////////////////////");
 				t.commit();
 				session.flush();
 				session.close();
