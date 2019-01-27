@@ -128,7 +128,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div>
 				<a class="btn btn-primary"  href="playerForm.htm" onclick="return fullTeam(this)">Add Player</a>
 			</div>
-
+			<div>
+				<a class="btn btn-primary"  href="ajax.htm" onclick="return fullTeam(this)">Add Player</a>
+			</div>
 		</div>
 	</div>
 

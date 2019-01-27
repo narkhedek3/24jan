@@ -1,6 +1,7 @@
 package cntr;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.PlayerDao;
 import dao.TeamDao;
@@ -419,5 +421,20 @@ public class UserController {
 
 		return "about";
 	}
+	
+	
+	
+	/*
+	 * @RequestMapping(value="/ajax.htm")
+	 * 
+	 * @ResponseBody public ResponseBody showAjax() { ResponseBody responseBody =
+	 * new ResponseBody() {
+	 * 
+	 * @Override public Class<? extends Annotation> annotationType() { // TODO
+	 * Auto-generated method stub return null; } }; return "scoreCard"; }
+	 */
+
+	
+	
 
 }
