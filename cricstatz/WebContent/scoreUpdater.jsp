@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="dto.MatchDetails" %>
+<%@ page import="dto.MatchDetails"%>
+<%@ page import="dto.Player"%>
+<%@ page import="dto.Team"%>
+<%@ page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -14,8 +17,12 @@
 	content="Tennis Court Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 </script>
 <!-- //custom-theme -->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css"
@@ -37,7 +44,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<%
-		MatchDetails match = (MatchDetails)request.getAttribute("match");
+		MatchDetails match = (MatchDetails) request.getAttribute("match");
+		Team team1 = (Team) request.getAttribute("team1");
+		Team team2 = (Team) request.getAttribute("team2");
+		List<Player> playerTeam1List = (List<Player>) request.getAttribute("playerTeam1List");
+		List<Player> playerTeam2List = (List<Player>) request.getAttribute("playerTeam2List");
 	%>
 	<!-- /banner -->
 	<div class="banner1">
@@ -50,109 +61,193 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //banner -->
 	<!-- Team Profile -->
 
-	<h1><%=match.getTeam1Id() %> Vs <%=match.getTeam2Id() %></h1>
+	<h1>
+		<label id="playingTeam1"><%=match.getTeam1Id()%></label> Vs <label
+			id="playingTeam2"><%=match.getTeam2Id()%></label>
+	</h1>
 
+	
+		
+	<button type="button" style="height: 50px; width: 100px"class="btn btn-primary waves-effect" onclick="selectTeam1(<%=team1.getTeamId()%>)"><%=team1.getTeamName()%></button>
+	<button type="button" style="height: 50px; width: 100px"class="btn btn-primary waves-effect" onclick="selectTeam2(<%=team2.getTeamId()%>)"><%=team2.getTeamName()%></button>
+
+	<select id="currentTeam1" >
+		<%
+			for (Player player : playerTeam1List) {
+		%>
+
+		<option value="<%=player.getPlayerId()%>" onselect="setPlayerId(<%=player.getPlayerId()%>)"><%=player.getPlayerName()%></option>
+		<%
+			}
+		%>
+	</select>
+
+	<select id="currentTeam2">
+		<%
+			for (Player player : playerTeam2List) {
+		%>
+
+		<option value="<%=player.getPlayerId()%>" onselect="setPlayerId(<%=player.getPlayerId()%>)"><%=player.getPlayerName()%></option>
+		<%
+			}
+		%>
+	</select>
 	<div class="coaching_section">
-		
-	<div class="container" style="width:450px; height: 350px;border: 2px solid black;">
-	<!--<h1>Score Updator</h1>-->
-		<div class="card ">
-		<div class="card-header" style="margin-top: 10px; margin-button: 10px">
-		
-			<div>
-					<textarea rows="2" cols="15">6/0</textarea>
 
-					<textarea rows="2" cols="15">0.2</textarea>
-			</div>
-			
-		</div>	
-			
-			
-			<div style="margin-top: 15px">
-				<table>
-				
-				<tr >
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">+1</button></td>
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">+2</button></td>
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">+3</button></td>
-				</tr>
-				
-				
-				<tr >
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">dot ball</button></td>
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">+4</button></td>
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">+6</button></td>
-				</tr>
-				
-				<tr >
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">wide ball</button></td>
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">no ball</button></td>
-				<td><button type="button" style="height:50px; width:100px" class="btn btn-primary waves-effect">wicket</button></td>
-				</tr>
-				
-				</table>
-			
+		<div class="container"
+			style="width: 450px; height: 350px; border: 2px solid black;">
+			<!--<h1>Score Updater</h1>-->
+			<div class="card ">
+				<div class="card-header"
+					style="margin-top: 10px; margin-button: 10px">
+
+					<div>
+						<textarea rows="2" cols="15">6/0</textarea>
+
+						<textarea rows="2" cols="15">0.2</textarea>
+					</div>
+
+				</div>
+
+
+				<div style="margin-top: 15px">
+					<table>
+
+						<tr>
+							<td><button id="addOne" type="button"
+									style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">+1</button></td>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">+2</button></td>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">+3</button></td>
+						</tr>
+
+
+						<tr>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">dot ball</button></td>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">+4</button></td>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">+6</button></td>
+						</tr>
+
+						<tr>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">wide ball</button></td>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">no ball</button></td>
+							<td><button type="button" style="height: 50px; width: 100px"
+									class="btn btn-primary waves-effect">wicket</button></td>
+						</tr>
+
+					</table>
+
 				</div>
 
 
 
-					<div class="card-footer make-center">
-						<div class=" make-center" style="margin-top: 15px">
-							<a href="#">
-							<button type="button"
-									class="btn btn-primary waves-effect"
-									style="height: 50px; width: 80px">Undo
-							</button>
-							</a>
-						</div>
+				<div class="card-footer make-center">
+					<div class=" make-center" style="margin-top: 15px">
+						<a href="#">
+							<button type="button" class="btn btn-primary waves-effect"
+								style="height: 50px; width: 80px">Undo</button>
+						</a>
 					</div>
 				</div>
-	<br>
+			</div>
+			<br>
+
+		</div>
 
 	</div>
 
-</div>
-	
-		
+
 	<!-- Team Profile -->
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
 	<!-- //footer -->
 
-	
-	
-	<!-- Modal4 -->
-	<div class="modal fade" id="myModal4" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
 
-					<div class="signin-form profile">
-						<h3 class="agileinfo_sign">Add Player Info </h3>
-						<div class="login-form">
-							<form action="#" method="post">
-								<input type="text" name="name" placeholder="Player Name"required=""> 
-								<input type="text" name="age" placeholder="Player Age" required=""> 
-								<input type="text" name="jerseyno" placeholder="Jersey No." required=""> 
-													 
-									 <input type="submit" value="Add Player">
-							</form>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- //Modal4 -->
 
-	<!-- //bootstrap-pop-up -->
+	>
+
+
 
 	<!-- js -->
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<!-- //js -->
+
+	<!-- ajax -->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+    $(document).ready(function(){
+       
+    	  $('#addOne').click(function(e) {
+        	 // let ctr = $(this).val();
+        	  /* if(ctr == 10) {
+        		  var timeinterval  = 10;
+        	      var basePrice     = 1000;
+        	      var consumerName  = "abc"; */
+
+					var addOne=1;
+        	      
+        	      console.log("ok");
+          		  $.ajax({
+       	    	    url: 'http://localhost:8081/cricstatz/addOne.htm?teamId='+currentTeamId+'&playerId='+playerId+'&score='+addOne ,
+       	    	    type: 'get',
+       	    	
+       	    	   /*  success: function(response){
+       	    	     // Perform operation on the return value
+       	    	     console.log("ok");
+       	    	    } */
+       	    	   });
+          		 console.log("ok2");
+           	  
+         });
+    	  console.log("ok3");
+   	});
+    </script>
+
+	<!-- //ajax -->
+
+	<!-- select team player -->
+	<script type="text/javascript">
+		let  team1Id = document.getElementById("playingTeam1").innerHTML;
+		let selectedTeam = $('#selectCurrentTeam').val();
+		$("#currentTeam1").hide();
+		$("#currentTeam2").hide();
+		let currentTeamId = null;
+		function selectTeam1(id){
+				if(id==team1Id){
+					$("#currentTeam1").show();
+					$("#currentTeam2").hide();
+					currentTeamId = id;
+					}
+				
+			}
+
+		function selectTeam2(id){
+			if(id!=team1Id){
+				$("#currentTeam1").hide();
+				$("#currentTeam2").show();
+				currentTeamId = id;
+				}
+			
+		}
+
+		function setPlayerId(id)
+		{
+			let playerId = id;
+		}
+		
+		</script>
+
+	<!-- //select team player -->
+
 	<!-- start-smooth-scrolling -->
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>

@@ -62,7 +62,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agile_team_grids_top">
 				<div class="col-md-6 w3ls_banner_bottom_left w3ls_courses_left">
 					<div class="w3ls_banner_bottom_right1">
-						<h2></h2>
+						<h2><%=team.getTeamName() %></h2>
 
 						<ul class="some_agile_facts">
 							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TEAM
@@ -79,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							<% } %>
 							<li><i class="fa fa-long-arrow" aria-hidden="true"></i>
-								<button class="btn btn-primary">EDIT PROFILE</button></li>
+								<button class="btn btn-primary" data-toggle="modal" data-target="#myModalEdit">EDIT PROFILE</button></li>
 						</ul>
 					</div>
 				</div>
@@ -128,9 +128,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div>
 				<a class="btn btn-primary"  href="playerForm.htm" onclick="return fullTeam(this)">Add Player</a>
 			</div>
-			<div>
-				<a class="btn btn-primary"  href="ajax.htm" onclick="return fullTeam(this)">Add Player</a>
-			</div>
+			
 		</div>
 	</div>
 
@@ -139,6 +137,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
 	<!-- //footer -->
+	
+	
+	 <!-- teamEditModal -->
+	<div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+					<div class="signin-form profile">
+						<h3 class="agileinfo_sign">Sign Up</h3>
+						<div class="login-form">
+							<spr:form action="teamEditModal.htm" method="post" commandName="team">
+								TEAM emailID:<spr:input type="text"  path="emailId" readonly="true"/>
+								TEAM ID:<spr:input type="text"  path="teamId" readonly="true"/>
+								TOURNAMENT ID:<spr:input type="text"  path="tournamentId" readonly="true"/>   
+								TEAM NAME:<spr:input type="text"  path="teamName" required=""/>
+								
+								<input type="submit" value=" Change">
+							</spr:form>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //teamEditModal --> --
 
 	
 	<script type="text/javascript">

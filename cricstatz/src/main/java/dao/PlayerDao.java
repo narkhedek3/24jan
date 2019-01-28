@@ -78,4 +78,24 @@ public class PlayerDao {
 		});
 		return list;
 	}
+	
+	
+	public Player selectPlayerWithPlayerId(long playerId) {
+
+		Player list = hibernateTemplate.execute(new HibernateCallback<Player>() {
+
+			public Player doInHibernate(Session session) throws HibernateException {
+				Transaction t = session.beginTransaction();
+				Query q = session.createQuery("from Player where playerId= ?");
+				q.setLong(0, playerId);
+				List<Player> playerList = q.list();
+				Player player = playerList.get(0);
+				t.commit();
+				session.flush();
+				session.close();
+				return player;
+			}
+		});
+		return list;
+	}
 }

@@ -81,6 +81,26 @@ public class TeamDao {
 	}
 	
 	
+	public Team selectTeam(long teamId) {
+
+		Team list = hibernateTemplate.execute(new HibernateCallback<Team>() {
+
+			public Team doInHibernate(Session session) throws HibernateException {
+				Transaction t = session.beginTransaction();
+				Query q = session.createQuery("from Team where teamId = ?");
+				q.setLong(0,teamId );
+				List<Team> teamList = q.list();
+				Team team = teamList.get(0);
+				t.commit();
+				session.flush();
+				session.close();
+				return team;
+			}
+		});
+		return list;
+	}
+	
+	
 	
 	public Team getTeam(User user) {		
 		Team team = hibernateTemplate.execute(new HibernateCallback<Team>(){			
@@ -111,4 +131,7 @@ public class TeamDao {
 		
 		return team;
 	}
+	
+	
+	
 }
