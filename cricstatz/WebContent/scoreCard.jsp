@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="dto.MatchDetails" %>
+<%@ page import="dto.Player" %>
+<%@ page import="dto.Team" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
-<meta http-equiv="refresh" content="10">
-	<title>CricStatz</title>
+
+	<title>Score Card</title>
 	<!-- custom-theme -->
-	<meta http-equiv="refresh" content="20">
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Tennis Court Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -42,6 +47,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 
 	<br />
+<%
+	MatchDetails match = (MatchDetails)request.getAttribute("match");
+	Team team1 = (Team)request.getAttribute("team1");
+	Team team2 = (Team)request.getAttribute("team2");
+	List<Player> team1Players = (List<Player>)request.getAttribute("team1Players");
+	List<Player> team2Players = (List<Player>)request.getAttribute("team2Players");
+	String tournamentName = (String) request.getAttribute("tournamentName");
+
+%>
 
 
 <div class="container" style="width:300px; height: 140px;border: 2px solid black;">
@@ -50,30 +64,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			
 
 			<div class="card-header" style="text-align: center">
-				<h3> TOURNAMENT NAME </h3>
+				<h3><%= tournamentName %></h3>
 			</div>
 			<br>
-			<div class="card-body" style="width:100%" ">
+			<div class="card-body" style="width:100% " >
 						
-						<h4 style="text-align: center">Team1 VS Team2</h4> 
+				<button type="button" id="team1" style="height: 30px; width: 100%"class="btn btn-primary " onclick=" selectTeam1(<%=team1.getTeamId()%>)"><%=team1.getTeamName()%></button>
+				<h3>VS</h3>
+				<button type="button" id="team2" style="height: 30px; width: 100%"class="btn btn-primary " onclick="selectTeam2(<%=team2.getTeamId()%>)"><%=team2.getTeamName()%></button>		
 				
 			</div>
 			<br>
-			<div class="card-footer make-center">
-			<h4 class="make-center" style="background: #09347a;; color:whitesmoke;width: 100%">
-				<span>Team1:</span> &nbsp;
-				<span>100</span> &nbsp;
-				<span>/</span> &nbsp;
-				<span>3</span> &nbsp;
-
-
-			</div>
+			
+			
+			
 			
 		</div>
 	</div>
 	<br>
 	
+<div id="currentTeam1">
+			<div class="card-footer make-center">
+			<h4 class="make-center" style="background: #09347a; color:whitesmoke;width: 100%">
+				<span><%=team1.getTeamName()%></span> &nbsp;
+				<span><%=team1.getTeamScore()%></span> &nbsp;
+				<span>/</span> &nbsp;
+				<span><%=team1.getTotalWickets()%></span> &nbsp;
+			</h4>
 
+			</div>
 	<div style="margin-left: 250px; margin-right: 250px">
 		<table class="table table-sm table-primary" style="border-top: 1px solid gray">
 			<thead>
@@ -90,15 +109,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</tr>
 			</thead>
 			<tbody>
+			<%
+				for(Player player : team1Players){
+			%>
 				<tr>
-					<th scope="row">Priyanka</th>
-					<td>45</td>
-					<td>30</td>
-					<td>5</td>
-					<td>02</td>
-					<td>12.5</td>
+					<th scope="row"><%=player.getPlayerName() %></th>
+					<td><%=player.getPlayerCurrentScore() %></td>
+					<td><%=player.getBatsmanCurrentBalls() %></td>
+					<td><%=player.getCurrentMatch_4s() %></td>
+					<td><%=player.getCurrentMatch_6s() %></td>
+					
+					<% if(player.getBatsmanCurrentBalls()!=0){ %>	
+					<td><%=(player.getPlayerCurrentScore() / player.getBatsmanCurrentBalls())*100 %></td>
+					<% }else{ %>
+					<td>-</td>
+					<%
+					}
+					%>
 				</tr>
-
+			<% } %>
+		
 			</tbody>
 		</table>
 	</div>
@@ -117,24 +147,131 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<th scope="col">Overs</th>
 					<th scope="col">Runs</th>
 					<th scope="col">Wickets</th>
-					<th scope="col">No Balls</th>
-					<th scope="col">Wide</th>
+					<th scope="col">Economy</th>
+					
 				</tr>
 			</thead>
 			<tbody>
+			<%
+			
+				for(Player player : team2Players){
+					int a = (int)(player.getCurrentBallsByBowler() / 6) ;
+			%>
 				<tr>
-					<th scope="row">Priyanka</th>
-					<td>10</td>
-					<td>45</td>
-					<td>3</td>
-					<td>03</td>
-					<td>03</td>
+					<th scope="row"><%=player.getPlayerName() %></th>
+					<td><%=(int)(player.getCurrentBallsByBowler() / 6) %>. <%=(int)(player.getCurrentBallsByBowler() % 6) %></td>
+					<td><%=player.getBowlerCurrentRuns()%></td>
+					<td><%=player.getCurrentMatchWickets()%></td>
+					<%if(player.getCurrentBallsByBowler()!=0)
+					{
+					%>	
+					
+					<td><%= ( (player.getBowlerCurrentRuns()) / (player.getCurrentBallsByBowler() / 6) ) %></td>
+					<%
+					}else{
+					%>
+					<td>-</td>
+					<% } %>				
 				</tr>
+			<%
+				}
+			%>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<div id="currentTeam2">
+			<div class="card-footer make-center">
+			<h4 class="make-center" style="background: #09347a; color:whitesmoke;width: 100%">
+				<span><%=team2.getTeamName()%></span> &nbsp;
+				<span><%=team2.getTeamScore()%></span> &nbsp;
+				<span>/</span> &nbsp;
+				<span><%=team2.getTotalWickets()%></span> &nbsp;
+			</h4>
+
+			</div>
+	<div style="margin-left: 250px; margin-right: 250px">
+		<table class="table table-sm table-primary" style="border-top: 1px solid gray">
+			<thead>
+			<h3><b>Batsman</b></h3>
+			
+				<tr>
+				
+					<th scope="col">Name123</th>
+					<th scope="col">Runs</th>
+					<th scope="col">Balls</th>
+					<th scope="col">No. of 4's</th>
+					<th scope="col">No. of 6's</th>
+					<th scope="col">StrikeRate</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				for(Player player : team2Players){
+				%>
+				<tr>
+					<th scope="row"><%=player.getPlayerName() %></th>
+					<td><%=player.getPlayerCurrentScore() %></td>
+					<td><%=player.getBatsmanCurrentBalls() %></td>
+					<td><%=player.getCurrentMatch_4s() %></td>
+					<td><%=player.getCurrentMatch_6s() %></td>
+					<% if(player.getBatsmanCurrentBalls()!=0){ %>
+					<td><%=(player.getPlayerCurrentScore() / player.getBatsmanCurrentBalls())*100 %></td>
+					<% }else{ %>
+					<td>-</td>
+					<% } %>
+				</tr>
+				<%
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
+		<br>
+		<br>
+		
+	<div style="margin-left: 250px; margin-right: 250px">
+		<table class="table table-sm table-primary" style="border-top: 1px solid gray">
+			<thead>
+			<h3>Bowler</h3>
+	
+				<tr>
+				
+					<th scope="col">Name</th>
+					<th scope="col">Overs</th>
+					<th scope="col">Runs</th>
+					<th scope="col">Wickets</th>
+					<th scope="col">Economy</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				for(Player player : team1Players){
+				%>
+				<tr>
+					<th scope="row"><%=player.getPlayerName() %></th>
+					<td><%=(player.getCurrentBallsByBowler() / 6) %></td>
+					<td><%=player.getBowlerCurrentRuns()%></td>
+					<td><%=player.getCurrentMatchWickets()%></td>
+					<% if(player.getCurrentBallsByBowler()!=0){ %>
+					<td><%= ( (player.getBowlerCurrentRuns()) / (player.getCurrentBallsByBowler() / 6) ) %></td>
+					<% }else{ %>
+					<td>-</td>
+					<% }%>
+				</tr>
+				<%
+					}
+				%>
+
+			</tbody>
+		</table>
+	</div>
+</div>
 
 	<!-- Players List -->
 	<!-- footer -->
@@ -142,7 +279,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //footer -->
 
 	
-	<!-- //bootstrap-pop-up -->
+	<!-- //stats js -->
+	<script type="text/javascript">
+	$("#currentTeam1").show();
+	$("#currentTeam2").hide();
+	
+	function selectTeam1(id){
+				
+					$("#currentTeam1").show();
+					$("#currentTeam2").hide();
+
+								
+									
+			}
+
+		function selectTeam2(id){
+			
+				$("#currentTeam1").hide();
+				$("#currentTeam2").show();
+
+				
+				
+			
+		}
+		</script>
 
 	<!-- js -->
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>

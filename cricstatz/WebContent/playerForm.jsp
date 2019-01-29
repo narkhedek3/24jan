@@ -7,6 +7,7 @@
 <html lang="zxx">
 
 <head>
+<title>Player Form</title>
 <!-- custom-theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -45,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="banner1">
 		<div class="wthree_banner1_info">
 			<h3>
-				<span>T</span>eam Profile
+				<span>P</span>layer Form
 			</h3>
 		</div>
 	</div>
@@ -53,7 +54,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- Player Form -->
 
 	<div class="signin-form profile">
-		<h3 class="agileinfo_sign">Sign In</h3>
+		<h3 class="agileinfo_sign">Player Form</h3>
 		<div class="login-form">
 			<spr:form commandName="player" action="createPlayer.htm" method="post" enctype="multipart/form-data">
 				<spr:input placeholder="Player Name" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" required="" path="playerName" />			

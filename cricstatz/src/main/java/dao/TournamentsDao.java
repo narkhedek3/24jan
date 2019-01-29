@@ -88,6 +88,31 @@ public class TournamentsDao {
 	}
 	
 	
+	public Tournament getTournament(long tournamentId) {
+
+		Tournament tournament = hibernateTemplate.execute(new HibernateCallback<Tournament>() {
+
+			public Tournament doInHibernate(Session session) throws HibernateException {
+				Transaction t = session.beginTransaction();
+				Query q = session.createQuery("from Tournament where tournamentId = ?");
+				q.setLong(0,tournamentId);
+				List<Tournament> tournamentList = q.list();
+				if(tournamentList.isEmpty()!=true)
+				{
+					for(Tournament tournament : tournamentList)
+					{
+						return tournament;
+					}
+				}
+				t.commit();
+				session.flush();
+				session.close();
+				return null;
+			}
+		});
+		return tournament;
+	}
+	
 	
 	public List<Team> getRegisteredTeams(Tournament tournament) {
 
@@ -107,6 +132,10 @@ public class TournamentsDao {
 		});
 		return list;
 	}
+	
+	
+	
+	
 	
 	public void updateTournament(final Tournament tournament) {
 		hibernateTemplate.execute(new HibernateCallback<List<Tournament>>() {

@@ -80,6 +80,8 @@ public class TeamDao {
 		return list;
 	}
 	
+
+	
 	
 	public Team selectTeam(long teamId) {
 

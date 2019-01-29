@@ -15,22 +15,22 @@ public class Player {
 	private String playerName;
 	private long teamId;
 	private String playerStatus;
-	private int playerTotalRuns;
+	private double playerTotalRuns;
 	private double playerAverage;
 	private boolean inPlaying_11;
-	private int playerCurrentScore;
-	private int currentMatch_4s;
-	private int total_4s;
-	private int currentMatch_6s;
-	private int total_6s;
-	private int currentMatchWickets;
-	private int totalWickets;
+	private double playerCurrentScore;
+	private double currentMatch_4s;
+	private double total_4s;
+	private double currentMatch_6s;
+	private double total_6s;
+	private double currentMatchWickets;
+	private double totalWickets;
 	private boolean currentBatsMan;
 	private boolean currentBowler;
-	private int currentBallsByBowler;
-	private int bowlerCurrentRuns;
-	private int bowlerTotalRuns;
-	private int batsmanCurrentBalls;
+	private double currentBallsByBowler;
+	private double bowlerCurrentRuns;
+	private double bowlerTotalRuns;
+	private double batsmanCurrentBalls;
 	private String playerImage; 
 	
 	public Player() {
@@ -45,11 +45,11 @@ public class Player {
 	
 
 	
-	public Player(long playerId, String playerName, long teamId, String playerStatus, int playerTotalRuns,
-			double playerAverage, boolean inPlaying_11, int playerCurrentScore, int currentMatch_4s, int total_4s,
-			int currentMatch_6s, int total_6s, int currentMatchWickets, int totalWickets, boolean currentBatsMan,
-			boolean currentBowler, int currentBallsByBowler, int bowlerCurrentRuns, int bowlerTotalRuns,
-			int batsmanCurrentBalls, String playerImage) {
+	public Player(long playerId, String playerName, long teamId, String playerStatus, double playerTotalRuns,
+			double playerAverage, boolean inPlaying_11, double playerCurrentScore, double currentMatch_4s, double total_4s,
+			double currentMatch_6s, double total_6s, double currentMatchWickets, double totalWickets, boolean currentBatsMan,
+			boolean currentBowler, double currentBallsByBowler, double bowlerCurrentRuns, double bowlerTotalRuns,
+			double batsmanCurrentBalls, String playerImage) {
 		super();
 		this.playerId = playerId;
 		this.playerName = playerName;
@@ -74,11 +74,11 @@ public class Player {
 		this.playerImage = playerImage;
 	}
 
-	public int getBowlerCurrentRuns() {
+	public double getBowlerCurrentRuns() {
 		return bowlerCurrentRuns;
 	}
 
-	public void setBowlerCurrentRuns(int bowlerCurrentRuns) {
+	public void setBowlerCurrentRuns(double bowlerCurrentRuns) {
 		this.bowlerCurrentRuns = bowlerCurrentRuns;
 	}
 
@@ -114,11 +114,11 @@ public class Player {
 		this.playerStatus = playerStatus;
 	}
 
-	public int getPlayerTotalRuns() {
+	public double getPlayerTotalRuns() {
 		return playerTotalRuns;
 	}
 
-	public void setPlayerTotalRuns(int playerTotalRuns) {
+	public void setPlayerTotalRuns(double playerTotalRuns) {
 		this.playerTotalRuns = playerTotalRuns;
 	}
 
@@ -138,59 +138,59 @@ public class Player {
 		this.inPlaying_11 = inPlaying_11;
 	}
 
-	public int getPlayerCurrentScore() {
+	public double getPlayerCurrentScore() {
 		return playerCurrentScore;
 	}
 
-	public void setPlayerCurrentScore(int playerCurrentScore) {
+	public void setPlayerCurrentScore(double playerCurrentScore) {
 		this.playerCurrentScore = playerCurrentScore;
 	}
 
-	public int getCurrentMatch_4s() {
+	public double getCurrentMatch_4s() {
 		return currentMatch_4s;
 	}
 
-	public void setCurrentMatch_4s(int currentMatch_4s) {
+	public void setCurrentMatch_4s(double currentMatch_4s) {
 		this.currentMatch_4s = currentMatch_4s;
 	}
 
-	public int getTotal_4s() {
+	public double getTotal_4s() {
 		return total_4s;
 	}
 
-	public void setTotal_4s(int total_4s) {
+	public void setTotal_4s(double total_4s) {
 		this.total_4s = total_4s;
 	}
 
-	public int getCurrentMatch_6s() {
+	public double getCurrentMatch_6s() {
 		return currentMatch_6s;
 	}
 
-	public void setCurrentMatch_6s(int currentMatch_6s) {
+	public void setCurrentMatch_6s(double currentMatch_6s) {
 		this.currentMatch_6s = currentMatch_6s;
 	}
 
-	public int getTotal_6s() {
+	public double getTotal_6s() {
 		return total_6s;
 	}
 
-	public void setTotal_6s(int total_6s) {
+	public void setTotal_6s(double total_6s) {
 		this.total_6s = total_6s;
 	}
 
-	public int getCurrentMatchWickets() {
+	public double getCurrentMatchWickets() {
 		return currentMatchWickets;
 	}
 
-	public void setCurrentMatchWickets(int currentMatchWickets) {
+	public void setCurrentMatchWickets(double currentMatchWickets) {
 		this.currentMatchWickets = currentMatchWickets;
 	}
 
-	public int getTotalWickets() {
+	public double getTotalWickets() {
 		return totalWickets;
 	}
 
-	public void setTotalWickets(int totalWickets) {
+	public void setTotalWickets(double totalWickets) {
 		this.totalWickets = totalWickets;
 	}
 
@@ -210,27 +210,27 @@ public class Player {
 		this.currentBowler = currentBowler;
 	}
 
-	public int getCurrentBallsByBowler() {
+	public double getCurrentBallsByBowler() {
 		return currentBallsByBowler;
 	}
 
-	public void setCurrentBallsByBowler(int currentBallsByBowler) {
+	public void setCurrentBallsByBowler(double currentBallsByBowler) {
 		this.currentBallsByBowler = currentBallsByBowler;
 	}
 
-	public int getBowlerTotalRuns() {
+	public double getBowlerTotalRuns() {
 		return bowlerTotalRuns;
 	}
 
-	public void setBowlerTotalRuns(int bowlerTotalRuns) {
+	public void setBowlerTotalRuns(double bowlerTotalRuns) {
 		this.bowlerTotalRuns = bowlerTotalRuns;
 	}
 
-	public int getBatsmanCurrentBalls() {
+	public double getBatsmanCurrentBalls() {
 		return batsmanCurrentBalls;
 	}
 
-	public void setBatsmanCurrentBalls(int batsmanCurrentBalls) {
+	public void setBatsmanCurrentBalls(double batsmanCurrentBalls) {
 		this.batsmanCurrentBalls = batsmanCurrentBalls;
 	}
 	

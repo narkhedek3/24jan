@@ -1,9 +1,5 @@
 package dto;
 
-
-
-
-
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -28,7 +24,7 @@ public class Tournament {
 	private String registrationEndDate;
 	private String tournamentStartDate;
 	private String tournamentEndDate;
-	private int numberOfTeams;
+	
 	private int entryFee;
 	private int winningPrize;
 	private String location;
@@ -46,7 +42,7 @@ public class Tournament {
 	
 
 	public Tournament(long tournamentId, String emailId, String tournamentName, String registrationStartDate,
-			String registrationEndDate, String tournamentStartDate, String tournamentEndDate, int numberOfTeams, int entryFee,
+			String registrationEndDate, String tournamentStartDate, String tournamentEndDate,  int entryFee,
 			int winningPrize, String location, String address) {
 		super();
 		this.tournamentId = tournamentId;
@@ -56,7 +52,7 @@ public class Tournament {
 		this.registrationEndDate = registrationEndDate;
 		this.tournamentStartDate = tournamentStartDate;
 		this.tournamentEndDate = tournamentEndDate;
-		this.numberOfTeams = numberOfTeams;
+		
 		this.entryFee = entryFee;
 		this.winningPrize = winningPrize;
 		this.location = location;
@@ -111,13 +107,7 @@ public class Tournament {
 		this.tournamentEndDate = tournamentEndDate;
 	}
 
-	public int getNumberOfTeams() {
-		return numberOfTeams;
-	}
 
-	public void setNumberOfTeams(int noOfTeams) {
-		this.numberOfTeams = noOfTeams;
-	}
 
 	public int getEntryFee() {
 		return entryFee;
@@ -164,7 +154,7 @@ public class Tournament {
 		return "Tournament [tournamentId=" + tournamentId + ", emailId=" + emailId + ", tournamentName="
 				+ tournamentName + ", registrationStartDate=" + registrationStartDate + ", registrationEndDate="
 				+ registrationEndDate + ", tournamentStartDate=" + tournamentStartDate + ", tournamentEndDate="
-				+ tournamentEndDate + ", numberOfTeams=" + numberOfTeams + ", entryFee=" + entryFee + ", winningPrize="
+				+ tournamentEndDate +  ", entryFee=" + entryFee + ", winningPrize="
 				+ winningPrize + ", location=" + location + ", address=" + address + "]";
 	}
 	

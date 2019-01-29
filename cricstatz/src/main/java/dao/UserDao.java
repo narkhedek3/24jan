@@ -33,8 +33,8 @@ import dto.User;
 		
 		public void createUser(final User user) {
 			
-			//String originalPassword=user.getPassword();
-			//user.setPassword(MD5Encryption.getMd5(originalPassword));
+			String originalPassword=user.getPassword();
+			user.setPassword(MD5Encryption.getMd5(originalPassword));
 			
 			hibernateTemplate.execute(new HibernateCallback<List<User>>() {
 
@@ -59,7 +59,7 @@ import dto.User;
 					Query q = session.createQuery("from User where emailId = ? and password = ? and userRole=?");
 					q.setString(0, user.getEmailId());
 					q.setString(1, user.getPassword());
-					//q.setString(1, MD5Encryption.getMd5(user.getPassword()));
+					q.setString(1, MD5Encryption.getMd5(user.getPassword()));
 					q.setString(2,user.getUserRole());
 					List<User> ul = q.list();
 					t.commit();

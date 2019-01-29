@@ -6,7 +6,7 @@
 <html lang="zxx">
 <head>
 
-
+<title>Team List</title>
 
 
 
@@ -46,12 +46,13 @@
 </script>
 
 
-<title>Insert title here</title>
+<title>Team List</title>
 
 <style>
 ui-widget-header {
-    border: 1px solid #e78f08;
-    background: #494949
+	border: 1px solid #e78f08;
+	background: #494949
+}
 </style>
 </head>
 <body>
@@ -61,7 +62,7 @@ ui-widget-header {
 
 
 
-	<div class="container" >
+	<div class="container">
 		<div class="row ">
 
 
@@ -78,9 +79,8 @@ ui-widget-header {
 
 							<th>Team Id</th>
 							<th>Team Name</th>
-							<th>Match Date</th>
-							<th>Total Matches</th>
-							<th>Score</th>
+							<th>Contact Details</th>
+
 
 
 						</thead>
@@ -95,21 +95,11 @@ ui-widget-header {
 		
 		%>
 
-
-
 							<tr>
 								<td><%=team.getTeamId() %></td>
 								<td><%=team.getTeamName()%></td>
-								<td><%=team.getMatchDate() %></td>
-								<td><%=team.getTotalMatches()%></td>
-								<td><%=team.getTeamScore() %></td>
-
-
-
-
+								<td><%=team.getEmailId() %></td>
 							</tr>
-
-
 
 							<%
 		}

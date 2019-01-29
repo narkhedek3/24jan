@@ -72,40 +72,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				%>
 				<li><a href="signOut.htm"><i class="fa fa-pencil-square-o"
 						aria-hidden="true"></i> Sign Out</a></li>
-				<li>
+				
 					<% }%>
-					<form action="#" method="post">
-						<input type="search" id="search" class="form"
-							style="display: none; border-radius: 10px; margin-right: 5px;"
-							name="Search" style="width:160px;margin-right: 20px"
-							placeholder="Search Keywords..." required="" />
-						<!--<input type="submit" id="hide" class="btn btn-primary"  value="Search">-->
-						<button type="submit" id="show" class="btn btn-primary"
-							value="search">Search</button>
+					
 
-
-						<script>
-
-                            $(document).ready(function () {
-                                $("#search").hide();
-                                var n = 0;
-
-                                $("#show").click(function () {
-                                    if (n % 2 == 0) {
-                                        $("#search").show();
-                                        n++;
-                                    }
-                                    else {
-                                        $("#search").hide();
-                                        n++;
-                                    }
-                                });
-
-                            });
-                        </script>
-
-					</form>
-				</li>
+					
+			
 			</ul>
 
 

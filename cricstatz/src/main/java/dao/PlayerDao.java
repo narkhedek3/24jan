@@ -145,6 +145,23 @@ public class PlayerDao {
 			}
 		});
 	}
+	
+	public Long countPlayers() {
+		Long counter = hibernateTemplate.execute(new HibernateCallback<Long>() {
+
+			public Long doInHibernate(Session session) throws HibernateException {
+				Transaction t = session.beginTransaction();
+				Query q = session.createQuery("select count(*) from Player");
+				Long counts = (Long)q.uniqueResult();
+			
+				t.commit();
+				session.flush();
+				session.close();
+				return counts;
+			}
+		});
+		return counter;
+	}
 
 	
 }

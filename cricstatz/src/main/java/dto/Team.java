@@ -28,7 +28,7 @@ public class Team {
 	private double netRunRate;
 	private long teamScore;
 	private int totalWickets;
-	private int totalBalls;
+	private double totalBalls;
 	public int getTotalWickets() {
 		return totalWickets;
 	}
@@ -37,11 +37,11 @@ public class Team {
 		this.totalWickets = totalWickets;
 	}
 
-	public int getTotalBalls() {
+	public double getTotalBalls() {
 		return totalBalls;
 	}
 
-	public void setTotalBalls(int totalBalls) {
+	public void setTotalBalls(double totalBalls) {
 		this.totalBalls = totalBalls;
 	}
 

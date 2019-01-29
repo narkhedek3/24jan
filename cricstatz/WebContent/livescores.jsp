@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="dto.MatchDetails" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="spr" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="dto.Team" %>    
+ 
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
-	<title>Tennis Court a Sports Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
+	<title>Live Scores</title>
 	<!-- custom-theme -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,47 +45,78 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 
 	<!--card-->
-
+	
 
 	<div class="container" style="width:300px; height: 260px;border: 2px solid black;">
-
+		<%
+		List<MatchDetails> matchList = (List<MatchDetails>) request.getAttribute("matchList");
+		List<Team> teamList = (List<Team>) request.getAttribute("teamList");
+		int count = 0;
+		String team1Name = "";
+		String team2Name = "";
+		long team1Id = 0;
+		long team2Id = 0;
+		if(!matchList.isEmpty()){
+			for(MatchDetails match : matchList)	
+			{				
+				for(Team team : teamList)
+				{
+					if(team.getTeamId() == match.getTeam1Id() || team.getTeamId() == match.getTeam2Id())
+					{
+						count++;
+						if(team.getTeamId() == match.getTeam1Id())
+						{
+							team1Id = team.getTeamId();
+							team1Name = team.getTeamName();
+						}else if(team.getTeamId() == match.getTeam2Id())
+						{
+							team2Id = team.getTeamId();
+							team2Name = team.getTeamName();
+						}
+					}
+				}
+				
+				
+				
+		%>
 		<div class="card ">
 			<div class="make-center ">
 
 				<img src="images/live.jpg" alt="Card image" style="width:90px;height: 90px; padding-top: 10px;">
 			</div>
 
-			<div class="card-header" style="text-align: center">
-				<h3> TOURNAMENT NAME </h3>
+			<div class="card-header">
+				<h5><%=match.getMatchId() %></h5>
 			</div>
 			<div class="card-body" style="width:100%">
 				<h4 class="make-center" style="background: #09347a;; color:whitesmoke;width: 100%">
 
 
 					<ul style="list-style-type:none ; text-align: center">
-						<li>Chennai Super KIngs</li>
+						<li><%= team1Name %></li>
 						<li>VS</li>
-						<li>MUmbai Indians</li>
+						<li><%= team2Name %></li>
 
 					</ul>
 				</h4>
 			</div>
-			<div class="card-footer make-center">
-				<span>CSK</span> &nbsp;
-				<span>100</span> &nbsp;
-				<span>/</span> &nbsp;
-				<span>3</span> &nbsp;
-
-
-			</div>
+			
 			<div class="make-center">
-				<a href="viewScoreCard.htm" class="btn btn-primary "> View ScoreCard</a>
+				<spr:form commandName="matchDetails" class="make-center" action="viewScoreCard.htm" method="post">
+					<spr:hidden path="matchId" value="<%=match.getMatchId() %>"/>
+					<input type="submit" value="View ScoreCard" class="btn btn-primary" style="margin-top:20px;" />
+				</spr:form>
 			</div>
 		</div>
+	
+	<%
+			}
+		}
+	%>
 	</div>
 	<br>
+	
 
-	</div>
 
 
 

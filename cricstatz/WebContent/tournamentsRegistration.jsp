@@ -7,10 +7,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+<title>Tournament Registration</title>
+<script src="js/jquery-2.2.4.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <link href="css/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
 
@@ -74,26 +74,16 @@
 			</div>
 			
 			 
-		<div class="form-group">
-				<label>Number Of Teams</label> 
-				<spr:select class="form-control"
-					path="numberOfTeams">
-					<spr:option value="0">Choose...</spr:option>
-					<spr:option value="4">4</spr:option>
-					<spr:option value="8">8</spr:option>
-					<spr:option value="16">16</spr:option>
-					<spr:option value="32">32</spr:option>
-				</spr:select>
-			</div>
+		
 			
 			<div class="form-group">
 				<label>Entry Fee</label>
-				<spr:input type="number"  min="1" max="1000" class="form-control" path="entryFee" />
+				<spr:input type="number" id="entryfee" min="1" max="1000" class="form-control" path="entryFee" />
 			</div>
 			
 			<div class="form-group">
 				<label>Winning Prize</label>
-				<spr:input type="number" min="1" max="10000" class="form-control" path="winningPrize" />
+				<spr:input type="number" id="winPrize" min="1" max="10000"  class="form-control" path="winningPrize" />
 			</div>
 			
 			<div class="form-group">
@@ -103,7 +93,7 @@
 			
 			<div class="form-group">
 				<label>Address</label>
-				<spr:input type="text" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" class="form-control" path="address" />
+				<spr:input type="text" class="form-control" path="address" />
 			</div>
 
 						<button type="submit" class="btn btn-primary">Submit</button>
@@ -116,9 +106,12 @@
 	<script>
 		var minDate = new Date();
 		$(document).ready(function() {
+			console.log("NILESH");
 			$("#sdate").datepicker({
+
+				console.log("NILESH 1");
 			showAnim:'drop',
-			minDate: -1,
+			minDate: '-1',
 			numberOfMonths: 1,
 			dateFormat: 'dd/mm/yyyy',
 			onclose: function(selectedDate)
@@ -141,7 +134,8 @@
 		   /* var syear=parseInt(sdate[0]);
 		    var smonth=parseInt(sdate[1]);
 		    var sday=parseInt(sdate[2]);*/
-
+			var entryfee = document.getElementById("entryfee").value;
+			var winPrize = document.getElementById("winPrize").value;
 		    var cdate = new Date();
 		    var cyear = cdate.getFullYear();
 		    var cmonth = cdate.getMonth();
@@ -159,6 +153,11 @@
 		        return false;
 		    }
 
+			if(entryfee > winPrize )
+			{
+				alert("Entry fee is greater than Winning Prize");
+				return false;
+			}
 
 		/*Registration start and end date validation*/
 		    if(sdate[0] > edate[0]){

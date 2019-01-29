@@ -87,8 +87,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/index.htm")
-	public String showindex() {
-
+	public String showindex(ModelMap model) {
+		Long counts = playerDao.countPlayers();
+		System.out.println(counts+"counts+++++++++++++++");
+		
+		model.addAttribute("playerCount",counts);
 		return "index";
 	}
 
@@ -155,8 +158,7 @@ public class UserController {
 			userDao.createUser(user);
 
 		}
-
-		return "loginPage";
+		return "index";
 	}
 
 	@RequestMapping(value = "/loginStatus.htm")
@@ -217,9 +219,40 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/livescores.htm")
-	public String showLiveScores() {
-
+	public String showLiveScores(ModelMap model) {
+		try {
+		List<MatchDetails> matchList =  matchDetailsDao.selectAllMatches();
+		List<Team> teamList = teamDao.selectTeam();
+		model.addAttribute("matchList",matchList);
+		model.addAttribute("teamList",teamList);
+		model.put("matchDetails", new MatchDetails());
+		}catch (Exception e) {
+			return "ErrorPage";
+		}
 		return "livescores";
+	}
+	
+	@RequestMapping(value = "/viewScoreCard.htm")
+	public String showScoreCard(MatchDetails match,ModelMap model) {
+		try {
+		MatchDetails matchDetails = matchDetailsDao.selectMatchWithTeamId(match.getMatchId());
+		model.addAttribute("match",matchDetails);
+		System.out.println(matchDetails+"matchDetails/*/*/*+cntr");
+		Team team1 = teamDao.selectTeam(matchDetails.getTeam1Id());
+		Team team2 = teamDao.selectTeam(matchDetails.getTeam2Id());
+		String tournamentName = tournamentsDao.getTournament(team1.getTournamentId()).getTournamentName();
+		model.addAttribute("tournamentName",tournamentName);
+		model.addAttribute("team1",team1);
+		model.addAttribute("team2",team2);
+		
+		List<Player> team1Players = playerDao.selectPlayerWithTeamId(team1);
+		List<Player> team2Players = playerDao.selectPlayerWithTeamId(team2);
+		model.addAttribute("team1Players",team1Players);
+		model.addAttribute("team2Players",team2Players);
+		}catch (Exception e) {
+			return "ErrorPage";
+		}
+		return "scoreCard";
 	}
 
 	@RequestMapping(value = "/preTournamentsRegistration.htm")
@@ -230,14 +263,18 @@ public class UserController {
 
 	@RequestMapping(value = "/teamSelection.htm")
 	public String teamSelect(MatchDetails match, ModelMap model) {
+		
 		matchDetailsDao.createMatch(match);
 		Team team1 =teamDao.selectTeam(match.getTeam1Id());
 		Team team2 =teamDao.selectTeam(match.getTeam2Id());
 		model.addAttribute("match", match);
-		model.addAttribute("team1",teamDao.selectTeam(match.getTeam1Id()));	
-		model.addAttribute("team2",teamDao.selectTeam(match.getTeam2Id()));
+		team1.setTotalMatchResults("------");
+		team2.setTotalMatchResults("------");
+		model.addAttribute("team1",team1);	
+		model.addAttribute("team2",team2);
 		model.addAttribute("playerTeam1List",  playerDao.selectPlayerWithTeamId(team1));
 		model.addAttribute("playerTeam2List",  playerDao.selectPlayerWithTeamId(team2));
+		model.put("matchDetails", new MatchDetails());
 		return "scoreUpdater";
 	}
 
@@ -371,7 +408,7 @@ public class UserController {
 					byte[] bytes = file.getBytes();
 
 					// Creating the directory to store file
-					String serverFileLocation = "C:\\Users\\Mayuresh\\Desktop\\images\\";					
+					String serverFileLocation = "C:\\Users\\Mayuresh\\git\\repository\\cricstatz\\WebContent\\images\\";					
 					System.out.println(file.getOriginalFilename());
 					
 					// Create the file on server
@@ -499,11 +536,7 @@ public class UserController {
 		return "tournaments";
 	}
 
-	@RequestMapping(value = "/viewScoreCard.htm")
-	public String showScoreCard() {
-
-		return "scoreCard";
-	}
+	
 
 	@RequestMapping(value = "/about.htm")
 	public String showabout() {
@@ -555,8 +588,8 @@ public class UserController {
 	    
 		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
 		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
-		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
-		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 2);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 2);
 		
 	    
 		System.out.println(team+"--------------------------");
@@ -583,8 +616,8 @@ public class UserController {
 	    
 		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
 		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
-		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
-		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 3);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() +3 );
 		
 		
 	    System.out.println(team+"--------------------------");
@@ -612,8 +645,8 @@ public class UserController {
 	    
 		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
 		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
-		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
-		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 4);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 4);
 		
 		
 	    System.out.println(team+"--------------------------");
@@ -640,8 +673,8 @@ public class UserController {
 	    
 		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
 		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
-		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
-		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 5);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 5);
 		
 		
 	    System.out.println(team+"--------------------------");
@@ -670,8 +703,8 @@ public class UserController {
 	    
 		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
 		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
-		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
-		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 6);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 6);
 		
 		
 	    System.out.println(team+"--------------------------");
@@ -698,8 +731,8 @@ public class UserController {
 	    
 		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
 		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
-		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
-		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 0);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 0);
 		
 		
 	    System.out.println(team+"--------------------------");
@@ -789,6 +822,69 @@ public class UserController {
 	
 		playerDao.updatePlayer(player);
 		playerDao.updatePlayer(playerB);			
+	}
+	
+	
+	@RequestMapping(value = "/matchResult.htm")
+	public String endMatch(HttpServletRequest request, HttpServletResponse response, MatchDetails match1,ModelMap model) {
+		
+		MatchDetails match =  matchDetailsDao.selectMatchWithTeamId(match1.getMatchId());
+		Team team1 = teamDao.selectTeam(match.getTeam1Id());
+		Team team2 = teamDao.selectTeam(match.getTeam2Id());
+		int count=0;
+		
+		if(team1.getTeamScore() > team2.getTeamScore())
+		{
+			count++;
+			team1.setTotalMatchResults("WINNER");
+		}else
+		{
+			team2.setTotalMatchResults("WINNER");
+		}
+		
+		team1.setCurrentRunrate(0);
+		team1.setTeamScore(0);
+		team1.setTotalBalls(0);
+		team1.setTotalWickets(0);
+		List<Player> team1Players = playerDao.selectPlayerWithTeamId(team1);
+		for(Player player : team1Players)
+		{
+			player.setBatsmanCurrentBalls(0);
+			player.setBowlerCurrentRuns(0);
+			player.setCurrentBallsByBowler(0);
+			player.setPlayerCurrentScore(0);
+			player.setCurrentMatch_4s(0);
+			player.setCurrentMatch_6s(0);
+			player.setCurrentMatchWickets(0);
+			playerDao.updatePlayer(player);
+		}
+		teamDao.updateTeam(team1);
+		
+		team2.setCurrentRunrate(0);
+		team2.setTeamScore(0);
+		team2.setTotalBalls(0);
+		team2.setTotalWickets(0);
+		List<Player> team2Players = playerDao.selectPlayerWithTeamId(team2);
+		for(Player player : team2Players)
+		{
+			player.setBatsmanCurrentBalls(0);
+			player.setPlayerCurrentScore(0);
+			player.setBowlerCurrentRuns(0);
+			player.setCurrentBallsByBowler(0);
+			player.setCurrentMatch_4s(0);
+			player.setCurrentMatch_6s(0);
+			player.setCurrentMatchWickets(0);
+			playerDao.updatePlayer(player);
+		}
+		teamDao.updateTeam(team2);
+		
+		if(count==0) {
+			model.put("team",team2);
+		}else {
+			model.put("team",team1);
+		}		
+		matchDetailsDao.deleteMatch(match);
+		return "matchResult";
 	}
 
 }

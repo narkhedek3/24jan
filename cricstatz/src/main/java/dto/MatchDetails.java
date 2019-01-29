@@ -1,12 +1,16 @@
 package dto;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import dao.TeamDao;
+import dto.Team;
 
 @Entity
 @Table (name="MatchDetails")
@@ -75,5 +79,13 @@ public class MatchDetails{
 	public void setRoundNo(long roundNo) {
 		this.roundNo = roundNo;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "MatchDetails [matchId=" + matchId + ", matchDate=" + matchDate + ", team1Id=" + team1Id + ", team2Id="
+				+ team2Id + ", scheduleId=" + scheduleId + ", roundNo=" + roundNo + "]";
+	}
+	
 	
 }

@@ -9,8 +9,7 @@
 <html lang="zxx">
 
 <head>
-<title>Tennis Court a Sports Category Flat Bootstrap Responsive
-	Website Template | Home :: w3layouts</title>
+<title>Tournaments</title>
 <!-- custom-theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -73,17 +72,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="container"
 		style="width: 300px; height: 260px; border: 2px solid black;">
 
-		<div class="card ">
-			<div class="make-center ">
-
-				<img src="images/live.jpg" alt="Card image"
-					style="width: 90px; height: 90px; padding-top: 10px;">
-			</div>
+		<div class="card" >
+			
 
 			<div class="card-header" style="text-align: center">
-				<h6>
-					<%=tournament.getTournamentId()%>
-				</h6>
+				
 				<h3>
 					<b> <%=tournament.getTournamentName() %>
 					</b>
@@ -95,25 +88,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 					<ul style="list-style-type: none; text-align: center">
-						<li><%=tournament.getAddress()+ " , " + tournament.getLocation()%></li>
+						
+							<h2>
+								Prize : <%=tournament.getWinningPrize() %>
+							</h2>
+						</li>
 						<li>
 							<h4>
-								<%=tournament.getWinningPrize() %>
+								Entry Fees :<%= tournament.getEntryFee() %>
 							</h4>
 						</li>
-						<li><%= tournament.getEntryFee() %></li>
-						<li><%= tournament.getRegistrationEndDate() %></li>
+						<li>
+							End Date : <%= tournament.getRegistrationEndDate() %>
+						</li>
 
 					</ul>
 				</h4>
 			</div>
-			<div class="card-footer make-center">
-				<h6>
-					<%=team.getTournamentId() %>
-					<%=tournament.getTournamentId()%>
-					<%=team.getTournamentId()==tournament.getTournamentId() %>
-				</h6>
+			<div class="card-footer make-center">			
+					
+					
+					<ul style="list-style-type: none; text-align: center">						
+						<li>
+							<b style="font-size: 30px">Venue</b>
+						</li>
+						<li>
+							<%= tournament.getAddress()%>
+						</li>
+						<li>
+							<%= tournament.getLocation()%>
+						</li>
 
+					</ul>
+						
 
 			</div>
 			<% if(request.getAttribute("currentUser")!=null && team.getTournamentId() != tournament.getTournamentId() && userRole.equals("Team Representative")){ %>

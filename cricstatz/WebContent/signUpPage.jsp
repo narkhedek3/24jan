@@ -5,7 +5,7 @@
 <html lang="zxx">
 
 <head>
-	<title>Tennis Court a Sports Category Flat Bootstrap Responsive Website Template | Mail :: w3layouts</title>
+	<title>Sign Up Page</title>
 	<!-- custom-theme -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -44,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- /banner -->
 	<div class="banner1">
 		<div class="wthree_banner1_info">
-			<h3><span>P</span>layers List</h3>
+			<h3><span>S</span>ignUp</h3>
 		</div>
 	</div>
 	<!-- //banner -->

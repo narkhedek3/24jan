@@ -41,7 +41,7 @@
 </script>
 
 
-<title>Insert title here</title>
+<title>Player List</title>
 
 <style>
 </style>

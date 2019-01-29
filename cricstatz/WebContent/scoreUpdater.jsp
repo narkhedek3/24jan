@@ -4,12 +4,12 @@
 <%@ page import="dto.Player"%>
 <%@ page import="dto.Team"%>
 <%@ page import="java.util.List"%>
+<%@ taglib prefix="spr" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
-<title>Tennis Court a Sports Category Flat Bootstrap Responsive
-	Website Template | Mail :: w3layouts</title>
+<title>Score Card Updater</title>
 <!-- custom-theme -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,16 +55,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="banner1">
 		<div class="wthree_banner1_info">
 			<h3>
-				<span>T</span>eam Profile
+				<span>S</span>core Updater
 			</h3>
 		</div>
 	</div>
 	<!-- //banner -->
 	<!-- Team Profile -->
-
+	
 	<h1>
-		<label id="playingTeam1"><%=match.getTeam1Id()%></label> Vs <label
+		<ul>
+			<li><label id="playingTeam1"><%=match.getTeam1Id()%></label> Vs <label
 			id="playingTeam2"><%=match.getTeam2Id()%></label>
+			</li>
+			<li>
+				Match Id :<label id="matchId"><%=match.getMatchId() %></label>
+			</li>
+		</ul>
 	</h1>
 
 	
@@ -205,7 +211,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<td><button  id="Wicket" type="button" style="height: 50px; width: 100px"
 									class="btn btn-primary waves-effect">wicket</button></td>
 						</tr>
-
+						<tr>	
+								<td>
+									<spr:form action="matchResult.htm" method="post" commandName="matchDetails">
+									<spr:hidden path="matchId" value="<%= match.getMatchId() %>"/>
+									<input type="submit"  id="EndMatch" type="button" style="height: 50px; width: 100px"									
+									class="btn btn-danger waves-effect" value="End Match"/>
+									</spr:form>
+								</td>
+						</tr>
 					</table>
 
 				</div>
@@ -218,7 +232,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 		</div>
 
-	</div>
+	
 
 
 	<!-- Team Profile -->
@@ -267,6 +281,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
            	  
          });
 
+    	 
+
+    	  
     	  $('#addTwo').click(function(e) {
 
 				var addTwo=2;
@@ -513,6 +530,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		let team2Score =0;
 		let team1Wicket=0;
 		let team2Wicket=0;
+		team1Score = document.getElementById("team1Score").innerHTML;
+		team2Score = document.getElementById("team2Score").innerHTML ;
 		
 		document.getElementById("team1Score").innerHTML = team1Score;
 		document.getElementById("team2Score").innerHTML = team2Score;

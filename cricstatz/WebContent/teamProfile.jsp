@@ -9,8 +9,7 @@
 <html lang="zxx">
 
 <head>
-<title>Tennis Court a Sports Category Flat Bootstrap Responsive
-	Website Template | Mail :: w3layouts</title>
+<title>Team Profile</title>
 <!-- custom-theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -152,7 +151,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 
 					<div class="signin-form profile">
-						<h3 class="agileinfo_sign">Sign Up</h3>
+						<h3 class="agileinfo_sign">Team Update</h3>
 						<div class="login-form">
 							<spr:form action="teamEditModal.htm" method="post" commandName="team">
 								TEAM emailID:<spr:input type="text"  path="emailId" readonly="true"/>

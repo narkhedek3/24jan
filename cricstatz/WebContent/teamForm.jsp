@@ -7,7 +7,7 @@
 <html lang="zxx">
 
 <head>
-
+<title>Team Form</title>
 <!-- custom-theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -86,80 +86,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<!--TEAM FORM -->
 
-	<!-- stats -->
-	<div class="stats">
-		<div class="col-md-4 w3layouts_stats_left w3_counter_grid">
-			<p class="counter">1,546</p>
-			<h3>Tournament</h3>
-		</div>
-		<div class="col-md-4 w3layouts_stats_left w3_counter_grid1">
-			<p class="counter">14,345</p>
-			<h3>Players</h3>
-		</div>
-		<div class="col-md-4 w3layouts_stats_left w3_counter_grid2">
-			<p class="counter">563</p>
-			<h3>Team</h3>
-		</div>
-
-		<div class="clearfix"></div>
-	</div>
-	<!-- //stats -->
-	<!-- stats-bottom -->
-	<div class="team">
-		<div class="container">
-			<div class="w3_agile_team_grid">
-				<div class="w3_agile_team_grid_left">
-					<h3 class="w3l_header w3_agileits_header">
-						Our <span>Skills</span>
-					</h3>
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<!-- //stats-bottom -->
-	<!-- stats-bottom-banner -->
-	<div class="stats-bottom-banner">
-		<div class="container">
-			<h3>
-				We are Open to <span>All Ages</span> and Abilities
-			</h3>
-			<p>Nunc in dolor hendrerit, pellentesque mi ac, accumsan nunc.
-				Vestibulum sapien lacus, auctor sed ullamcorper id, aliquam molestie
-				dui. Proin faucibus ullamcorper erat id interdum.</p>
-		</div>
-	</div>
-	<!-- //stats-bottom-banner -->
-	<!-- bootstrap-pop-up -->
-	<div class="modal video-modal fade" id="myModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModal">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="signin-form profile">
-					<h3 class="agileinfo_sign">Tennis Court</h3>
-					<div class="modal-body">
-						<img src="images/g1.jpg" alt=" " class="img-responsive" />
-						<p>
-							Ut enim ad minima veniam, quis nostrum exercitationem ullam
-							corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-							consequatur? Quis autem vel eum iure reprehenderit qui in ea
-							voluptate velit esse quam nihil molestiae consequatur, vel illum
-							qui dolorem eum fugiat quo voluptas nulla pariatur. <i>" Quis
-								autem vel eum iure reprehenderit qui in ea voluptate velit esse
-								quam nihil molestiae consequatur.</i>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- //bootstrap-pop-up -->
+	
+	
+	
+	
 
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>

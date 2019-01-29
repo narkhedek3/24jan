@@ -67,13 +67,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agile_team_grids_top">
 				<div class="col-md-6 w3ls_banner_bottom_left w3ls_courses_left">
 					<div class="w3ls_banner_bottom_right1">
-						<h2>TOURNAMENT NAME : </h2>
+						<h2><%=tournament.getTournamentName()%>  </h2>
 
 						<ul class="some_agile_facts">
 							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT
-								ID: <%=tournament.getTournamentId() %></li>
-							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT
-								NAME: <%=tournament.getTournamentName()%></li>
+								ID: <%=tournament.getTournamentId() %></li>							
 							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TOURNAMENT
 								LOCATION <%=tournament.getLocation() %></li>
 							<li><i class="fa fa-long-arrow" aria-hidden="true"></i>
@@ -129,10 +127,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			</div>
 
-			<div>
-				<button class="btn btn-primary" data-toggle="modal"
-					data-target="#myModal4">Schedule Tournament</button>
-			</div>
+			
 
 			<%
 				if(!teamList.isEmpty()){
@@ -209,13 +204,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 
 					<div class="signin-form profile">
-						<h3 class="agileinfo_sign">Sign Up</h3>
+						<h3 class="agileinfo_sign">Tournament Update</h3>
 						<div class="login-form">
 							<spr:form action="tournamentEditModal.htm" method="post" commandName="tournament">
 								TOURNAMENT emailID:<spr:input type="text"  path="emailId" readonly="true"/>
 								TOURNAMENT ID:<spr:input type="text"  path="tournamentId" readonly="true"/>   
-								TOURNAMENT NAME:<spr:input type="text"  path="tournamentName" required=""/>
-								TOURNAMENT LOCATION<spr:input type="text"  path="location" required=""/>
+								TOURNAMENT NAME:<spr:input type="text"  path="tournamentName" required="true"/>
+								TOURNAMENT ADDRESS<spr:input type="text"  path="address" required="true"/>
+								TOURNAMENT LOCATION<spr:input type="text"  path="location" required="true"/>
+								<spr:hidden path="registrationStartDate"/>
+								<spr:hidden path="registrationEndDate"/>
+								<spr:hidden path="entryFee"/>
+								<spr:hidden path="winningPrize"/>
+								<spr:hidden path="tournamentStartDate"/>
+								<spr:hidden path="tournamentEndDate"/>
 								<input type="submit" value=" CHange">
 							</spr:form>
 						</div>

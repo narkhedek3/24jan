@@ -94,89 +94,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"> </div>
 		</div>
 	</div>
-	<!-- //banner-bottom -->
-	<!-- middle 1-->
-	<div class="middle-w3l">
-		<div class="col-md-3 w3ls-special-img text_info">
-			<h4>Batting</h4>
-		</div>
-		<div class="col-md-3 w3ls-special-img w3l-grid-1">
-			<div class="w3ls-special-text effect-1">
-				<h4>Player 1</h4>
-				<ul>
-					<li>Runs: </li>
-					<li>Fours:</li>
-					<li>Sixes:</li>
-
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-3 w3ls-special-img w3l-grid-2">
-			<div class="w3ls-special-text effect-1">
-				<h4>Player 2</h4>
-				<ul>
-					<li>Runs: </li>
-					<li>Fours:</li>
-					<li>Sixes:</li>
-
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-3 w3ls-special-img w3l-grid-3">
-			<div class="w3ls-special-text effect-1">
-				<h4>Player 3</h4>
-				<ul>
-					<li>Runs: </li>
-					<li>Fours:</li>
-					<li>Sixes:</li>
-
-				</ul>
-			</div>
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-	<!-- /middle 1 -->
-	<br>
-	<!-- middle 2 -->
-	<div class="middle-w3l">
-		<div class="col-md-3 w3ls-special-img text_info">
-			<h4>Bowling</h4>
-		</div>
-		<div class="col-md-3 w3ls-special-img w3l-grid-1">
-			<div class="w3ls-special-text effect-1">
-				<h4>Player 1</h4>
-				<ul>
-					<li> Overs:</li>
-					<li>Wickets:</li>
-					<li>Runs:</li>
-
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-3 w3ls-special-img w3l-grid-2">
-			<div class="w3ls-special-text effect-1">
-				<h4>Player 2</h4>
-				<ul>
-					<li> Overs:</li>
-					<li>Wickets:</li>
-					<li>Runs:</li>
-
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-3 w3ls-special-img w3l-grid-3">
-			<div class="w3ls-special-text effect-1">
-				<h4>Player 3</h4>
-				<ul>
-					<li> Overs:</li>
-					<li>Wickets:</li>
-					<li>Runs:</li>
-				</ul>
-			</div>
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-	<br>
+	
+	
+	
+	
+	<%-- <%
+	System.out.println("Hello-----------------");
+	Integer playerCount = (Integer)request.getAttribute("playerCount");
+		System.out.println(playerCount+"-----------------");
+	
+	%> --%>
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- /middle 2 -->
 	<!--<div class="testimonials">
 <div class="container">
@@ -273,46 +208,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 </div>-->
 	<!-- /flip -->
-	<div class="w3_agile_timer">
-		<!--timer-->
-		<div class="agileits-timer">
-			<div class="main-title">
-				<h4>
-					<p>Next Tournament</p> Jason VS Anderson
-				</h4>
-				<div class="demo2"></div>
-			</div>
-		</div>
-
-		<!--//timer-->
-
-
-	</div>
-	<!-- //flip -->
-	<!-- bootstrap-pop-up -->
-	<div class="modal video-modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				</div>
-				<div class="signin-form profile">
-					<h3 class="agileinfo_sign">Tennis Court</h3>
-					<div class="modal-body">
-						<img src="images/g1.jpg" alt=" " class="img-responsive" />
-						<p>Ut enim ad minima veniam, quis nostrum
-							exercitationem ullam corporis suscipit laboriosam,
-							nisi ut aliquid ex ea commodi consequatur? Quis autem
-							vel eum iure reprehenderit qui in ea voluptate velit
-							esse quam nihil molestiae consequatur, vel illum qui
-							dolorem eum fugiat quo voluptas nulla pariatur.
-							<i>" Quis autem vel eum iure reprehenderit qui in ea voluptate velit
-								esse quam nihil molestiae consequatur.</i></p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- //bootstrap-pop-up -->
 	<!-- gallery -->
 	<!--<div class="gallery">
