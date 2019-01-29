@@ -27,67 +27,62 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<div class="footer_agile_w3ls">
-		<div class="container">
+		<div class="container" style="height:120px">
 			<div class="agileits_w3layouts_footer_grids">
-				<div class="col-md-3 footer-w3-agileits">
-					<h3>Training Grounds</h3>
-					<ul>
-						<li>Etiam quis placerat</li>
-						<li>the printing</li>
-						<li>unknown printer</li>
-						<li>Lorem Ipsum</li>
-					</ul>
+			
+				<div class="col-md-2 footer-w3-agileits" >
+					<h3>Our Links</h3>
+					
+						<li><a href="index.htm">Home</a></li>
 				</div>
-				<div class="col-md-3 footer-agileits">
-					<h3>Specialized</h3>
-					<ul>
-						<li>the printing</li>
-						<li>Etiam quis placerat</li>
-						<li>Lorem Ipsum</li>
-						<li>unknown printer</li>
-					</ul>
+				
+				<div class="col-md-2 footer-agileits">
+				<h3></h3>
+				<br>
+						<li><a href="about.htm">About</a></li>
 				</div>
-				<div class="col-md-3 footer-wthree">
-					<h3>Partners</h3>
-					<ul>
-						<li>unknown printer</li>
-						<li>Lorem Ipsum</li>
-						<li>the printing</li>
-						<li>Etiam quis placerat</li>
-					</ul>
+				
+
+				<div class="col-md-2 footer-wthree">
+				<h3></h3>
+				<br>
+				
+					<li><a href="livescores.htm">Live Scores</li>
 				</div>
 
-				<div class="col-md-3 footer-agileits-w3layouts">
-					<h3>Our Links</h3>
-					<ul>
-						<li><a href="index.htm">Home</a></li>
-						<li><a href="about.htm">About</a></li>
-						<li><a href="livescores.htm">Live Scores</li>
+				<div class="col-md-2 footer-agileits-w3layouts">
+				<h3></h3>
+				<br>
+				
 						<li><a href="tournaments.htm">Tournamnets</a></li>
-						<li><a href="playersList.htm">Players</li>
-						<li><a href="teamList.htm">Teams</li>
-					</ul>
 				</div>
-				<div class="clearfix"></div>
+				
+				<div class="col-md-2 footer-agileits-w3layouts">
+				<h3></h3>
+				<br>
+				
+						<li><a href="playersList.htm">Players</li>
+				</div>
+				
+				
+				<div class="col-md-2 footer-agileits-w3layouts">
+				<h3></h3>
+				<br>
+				
+						<li><a href="teamList.htm">Teams</li>
+				</div>
+			
+		<div class="clearfix"></div>
 
 			</div>
 			<div class="agileits_w3layouts_logo logo2">
-				<h2><a href="index.htm">CricStaz</a></h2>
-				<div class="agileits-social">
-					<ul>
-						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#"><i class="fa fa-rss"></i></a></li>
-						<li><a href="#"><i class="fa fa-vk"></i></a></li>
-					</ul>
-				</div>
-
+				<h2><a href="index.htm">CricStatz</a></h2>
 			</div>
 		</div>
 	</div>
 	<div class="wthree_copy_right">
 		<div class="container">
-			<p>Â© 2019 CricStaz. All rights reserved | Design by <a href="http://w3layouts.com/">CDAC-18 TOPPER</a></p>
+			<p>Copyright© 2019 CricStaz Inc. All rights reserved.</p>
 		</div>
 	</div>
 

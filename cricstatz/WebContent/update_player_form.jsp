@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spr" uri="http://www.springframework.org/tags/form"%>
-<%@ page import="dto.Player" %>
+<%@ page import="dto.Player"%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -14,8 +14,10 @@
 	content="Tennis Court Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } 
+
 </script>
 <!-- //custom-theme -->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css"
@@ -36,7 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- banner -->
 	<jsp:include page="header.jsp"></jsp:include>
 
-	<%
+	<%-- <%
 		Player player  = (Player)request.getAttribute("player");
 		System.out.println(player+"**************************");
 	%>
@@ -55,20 +57,52 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="signin-form profile">
 		<h3 class="agileinfo_sign">Sign In</h3>
 		<div class="login-form">
-			<spr:form commandName="player" action="createPlayer.htm" method="post" enctype="multipart/form-data">
+			<spr:form commandName="player" action="createPlayer.htm" method="post">
 				<spr:input placeholder="Player Name" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" required="" path="playerName" />			
 				<spr:input readonly="true" path="teamId" value="<%=player.getTeamId() %>"/>				
 				<input type="number" min="10" max="90" placeholder="Age"  />
 							
 				<div class="tp">
-				<input type="file" name="file" >
 					<input type="submit" value="Create">
 				</div>
 			</spr:form>
 		</div>
-	</div>
+	</div>--%>
 
+<div class="make-center">
+	<spr:form action="update_player.htm" method="post" commandName="player">
+		<table class="table table-border table-striped text-center" >
+			<tr>
+				<td><b>Player Name</b></td>
+				<td><b><spr:input path="playerName" /></b></td>
+				<br>
+			</tr>
 
+			<tr>
+				<td><b>Player Id</b></td>
+				<td><spr:input path="playerId" readonly="true" /></td>
+			</tr>
+			<br>
+
+			<tr>
+				<td><b>Team Id</b></td>
+				<td><spr:input path="teamId" readonly="true" /></td>
+			</tr>
+			<tr>
+				
+				<td><spr:hidden path="total_6s" readonly="true" /></td>
+				<td><spr:hidden path="total_4s" readonly="true" /></td>
+				<td><spr:hidden path="playerTotalRuns" readonly="true" /></td>
+				<td><spr:hidden path="totalWickets" readonly="true" /></td>
+			</tr>
+			<br>
+
+		</table>
+		<button style="margin-left: 110px; padding-bottom: 10px" class="btn btn-success" type="submit">Update</button><br>
+		<!--  <input class="bg-success" type="submit" value="Update" />-->
+		<br>
+	</spr:form>
+</div>
 	<!-- Player Form -->
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>

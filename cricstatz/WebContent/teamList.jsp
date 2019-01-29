@@ -1,243 +1,138 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@page import="dto.Team"%>
 <%@page import="java.util.List"%>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
-    <title>Tennis Court a Sports Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
-    <!-- custom-theme -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Tennis Court Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //custom-theme -->
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <link rel="stylesheet" href="css/mainStyles.css" />
-    <link rel='stylesheet' href='css/dscountdown.css' type='text/css' media='all' />
-    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
-    <!-- gallery -->
-    <link href="css/lsb.css" rel="stylesheet" type="text/css">
-    <!-- //gallery -->
-    <!-- font-awesome-icons -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
+
+
+
+
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css" />
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+<script type="text/javascript" charset="utf-8"
+	style="table-layout: fixed; background-color: black;">
+	$(document).ready(function() 
+{
+		$('#example').dataTable();
+	});
+</script>
+
+
+<title>Insert title here</title>
+
+<style>
+ui-widget-header {
+    border: 1px solid #e78f08;
+    background: #494949
+</style>
 </head>
-
 <body>
-   <jsp:include page="header.jsp"></jsp:include>
 
-    <!-- //banner -->
 
-    <!--card-->
 
-<%
+
+
+
+	<div class="container" >
+		<div class="row ">
+
+
+			<div class="col-md-12">
+				<h4 style="align-content: center;">Team List</h4>
+				<div class="table-responsive">
+					<form action="/cricstatz/index.jsp" class="inline">
+						<button class="btn btn-primary" style="margin-bottom: 5px">Back</button>
+					</form>
+
+					<table id="example" class="table table-bordred table-striped"
+						style="background-color: black;">
+						<thead>
+
+							<th>Team Id</th>
+							<th>Team Name</th>
+							<th>Match Date</th>
+							<th>Total Matches</th>
+							<th>Score</th>
+
+
+						</thead>
+						<tbody>
+							<%  
+		
 		List<Team> list = (List<Team>)request.getAttribute("teamList");
 		if(list!=null)
 		{
 			for(Team team: list)
 			{
+		
 		%>
 
-    <div class="container" style="width:300px; height: 260px;border: 2px solid black;">
-				
-        <div class="card ">
-            <div class="make-center ">
-
-                <img src="images/live.jpg" alt="Card image" style="width:90px;height: 90px; padding-top: 10px;">
-            </div>
-			
-            <div class="card-header" style="text-align: center">
-                <h3><%=team.getTeamName() %></h3>
-            </div>
-            <div class="card-body" style="width:100%">
-                <h4 class="make-center" style="background: #09347a;; color:whitesmoke;width: 100%">
 
 
-                    <ul style="list-style-type:none ; text-align: center">
-                        <li>Chennai Super KIngs</li>
-                        <li>VS</li>
-                        <li>MUmbai Indians</li>
-
-                    </ul>
-                </h4>
-            </div>
-            <div class="card-footer make-center">
-                <span>CSK</span> &nbsp;
-                <span>100</span> &nbsp;
-                <span>/</span> &nbsp;
-                <span>3</span> &nbsp;
+							<tr>
+								<td><%=team.getTeamId() %></td>
+								<td><%=team.getTeamName()%></td>
+								<td><%=team.getMatchDate() %></td>
+								<td><%=team.getTotalMatches()%></td>
+								<td><%=team.getTeamScore() %></td>
 
 
-            </div>
-            <div class="make-center">
-                <a href="#" class="btn btn-primary "> View ScoreCard</a>
-            </div>
-        </div>
-    </div>
-    <br>
 
-    </div>
 
-<%
-			}
+							</tr>
+
+
+
+							<%
 		}
+	}
 %>
+						
+					</table>
+				</div>
 
 
-    <!--card end-->
-    <!-- footer -->
-<jsp:include page="footer.jsp"></jsp:include>
-    <!-- //footer -->
-
-   
-    <!-- //bootstrap-pop-up -->
-
-    <!-- js -->
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <!-- //js -->
-    <!-- Counter required files -->
-    <script type="text/javascript" src="js/dscountdown.min.js"></script>
-    <script src="js/demo-1.js"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $('.demo2').dsCountDown({
-                endDate: new Date("December 24, 2020 23:59:00"),
-                theme: 'black'
-            });
-        });
-    </script>
-    <!-- //Counter required files -->
+			</div>
+		</div>
+	</div>
 
 
 
-    <script src="js/mainScript.js"></script>
-    <script src="js/rgbSlide.min.js"></script>
-    <!-- carousal -->
-    <script src="js/slick.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        $(document).on('ready', function () {
-            $(".center").slick({
-                dots: true,
-                infinite: true,
-                centerMode: true,
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            arrows: true,
-                            centerMode: false,
-                            slidesToShow: 2
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            arrows: true,
-                            centerMode: false,
-                            centerPadding: '40px',
-                            slidesToShow: 1
-                        }
-                    }
-                ]
-            });
-        });
-    </script>
-    <!-- //carousal -->
-    <!-- flexisel -->
-    <script type="text/javascript">
-        $(window).load(function () {
-            $("#flexiselDemo1").flexisel({
-                visibleItems: 4,
-                animationSpeed: 1000,
-                autoPlay: true,
-                autoPlaySpeed: 3000,
-                pauseOnHover: true,
-                enableResponsiveBreakpoints: true,
-                responsiveBreakpoints: {
-                    portrait: {
-                        changePoint: 480,
-                        visibleItems: 1
-                    },
-                    landscape: {
-                        changePoint: 640,
-                        visibleItems: 2
-                    },
-                    tablet: {
-                        changePoint: 768,
-                        visibleItems: 2
-                    }
-                }
-            });
 
-        });
-    </script>
-    <script type="text/javascript" src="js/jquery.flexisel.js"></script>
-    <!-- //flexisel -->
-    <!-- gallery-pop-up -->
-    <script src="js/lsb.min.js"></script>
-    <script>
-        $(window).load(function () {
-            $.fn.lightspeedBox();
-        });
-    </script>
-    <!-- //gallery-pop-up -->
-    <!-- flexSlider -->
-    <script defer src="js/jquery.flexslider.js"></script>
-    <script type="text/javascript">
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                start: function (slider) {
-                    $('body').removeClass('loading');
-                }
-            });
-        });
-    </script>
-    <!-- //flexSlider -->
 
-    <!-- start-smooth-scrolling -->
-    <script type="text/javascript" src="js/move-top.js"></script>
-    <script type="text/javascript" src="js/easing.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
-            });
-        });
-    </script>
-    <!-- start-smooth-scrolling -->
-    <!-- for bootstrap working -->
-    <script src="js/bootstrap.js"></script>
-    <!-- //for bootstrap working -->
-    <!-- here stars scrolling icon -->
-    <script type="text/javascript">
-        $(document).ready(function () {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
 
-            $().UItoTop({ easingType: 'easeOutQuart' });
 
-        });
-    </script>
-    <!-- //here ends scrolling icon -->
+
+
+
 </body>
 
 </html>

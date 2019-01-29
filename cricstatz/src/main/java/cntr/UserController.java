@@ -1,5 +1,8 @@
 package cntr;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.LinkedHashMap;
@@ -16,11 +19,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sun.javafx.collections.MappingChange.Map;
 
+import dao.MatchDetailsDao;
 import dao.PlayerDao;
 import dao.TeamDao;
 import dao.TournamentsDao;
@@ -42,6 +47,8 @@ public class UserController {
 	private UserDao userDao;
 	@Autowired
 	private PlayerDao playerDao;
+	@Autowired
+	private MatchDetailsDao matchDetailsDao;
 
 	public PlayerDao getPlayerDao() {
 		return playerDao;
@@ -107,7 +114,7 @@ public class UserController {
 			Tournament specificTournament = tournamentsDao.getTournament(user);
 
 			List<Team> teamList = tournamentsDao.getRegisteredTeams(specificTournament);
-			System.out.println(teamList + "++++++++++++++");
+			
 			model.addAttribute("tournament", specificTournament);
 			model.put("match", new MatchDetails());
 			session.setAttribute("teamList", teamList);
@@ -223,6 +230,7 @@ public class UserController {
 
 	@RequestMapping(value = "/teamSelection.htm")
 	public String teamSelect(MatchDetails match, ModelMap model) {
+		matchDetailsDao.createMatch(match);
 		Team team1 =teamDao.selectTeam(match.getTeam1Id());
 		Team team2 =teamDao.selectTeam(match.getTeam2Id());
 		model.addAttribute("match", match);
@@ -242,7 +250,7 @@ public class UserController {
 		Tournament specificTournament = tournamentsDao.getTournament(user);
 
 		List<Team> teamList = tournamentsDao.getRegisteredTeams(specificTournament);
-		System.out.println(teamList + "++++++++++++++");
+		
 		model.addAttribute("tournament", specificTournament);
 		model.put("match", new MatchDetails());
 		session.setAttribute("teamList", teamList);
@@ -259,14 +267,14 @@ public class UserController {
 	@RequestMapping(value = "/tournamentEditModal.htm")
 	public String tournamentEditModal(ModelMap model, Tournament tournament, HttpSession session,
 			HttpServletResponse response) {
-		System.out.println(tournament + "*--*-**-*-*-*-*-*-**-***-**-*-*-**-*-");
+		
 		tournamentsDao.updateTournament(tournament);
 
 		User user = (User) session.getAttribute("user");
 		Tournament specificTournament = tournamentsDao.getTournament(user);
 
 		List<Team> teamList = tournamentsDao.getRegisteredTeams(specificTournament);
-		System.out.println(teamList + "++++++++++++++");
+		
 		model.addAttribute("tournament", specificTournament);
 		model.put("match", new MatchDetails());
 		session.setAttribute("teamList", teamList);
@@ -281,7 +289,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/teamEditModal.htm")
 	public String teamEditModal(ModelMap model, Team team, HttpSession session,	HttpServletResponse response) {
-		System.out.println(team + "*--*-**-*-*-*-*-*-**-***-**-*-*-**-*-");
+		
 		teamDao.updateTeam(team);
 
 		User user = (User) session.getAttribute("user");
@@ -308,7 +316,7 @@ public class UserController {
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			Team currentTeam = teamDao.getTeam(user);
-			System.out.println(currentTeam + "*+**+*+*+*+*++*+*+*+**++**+*");
+		
 			if(currentTeam!=null)
 			{
 				model.addAttribute("teams", currentTeam);
@@ -334,7 +342,7 @@ public class UserController {
 	@RequestMapping(value = "/playersList.htm")
 	public String showplayersList(ModelMap model, HttpSession session) {
 		model.addAttribute("playerList", playerDao.selectAllPlayer());
-		System.out.println(playerDao.selectAllPlayer() + " contr----------------------");
+		
 		return "playersList";
 	}
 
@@ -350,12 +358,37 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/createPlayer.htm")
-	public String createplayer(Player player, HttpSession session, ModelMap model, HttpServletResponse response) {
+	public String createplayer(@RequestParam("file") MultipartFile file ,Player player, HttpSession session, ModelMap model, HttpServletResponse response) {
+		player.setPlayerImage(file.getOriginalFilename());
 		User user = (User) session.getAttribute("user");
 		Team specificTeam = teamDao.getTeam(user);
 		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
 		model.put("team", specificTeam);
 		playerDao.createPlayer(player);
+		
+		 if (!file.isEmpty()) {
+				try {
+					byte[] bytes = file.getBytes();
+
+					// Creating the directory to store file
+					String serverFileLocation = "C:\\Users\\Mayuresh\\Desktop\\images\\";					
+					System.out.println(file.getOriginalFilename());
+					
+					// Create the file on server
+					File serverFile = new File(serverFileLocation+""+file.getOriginalFilename());
+					BufferedOutputStream stream = new BufferedOutputStream(
+							new FileOutputStream(serverFile));
+					stream.write(bytes);
+					stream.close();
+
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			} 
+		 
+		 
+		 
 		try {
 			response.sendRedirect("teamProfile.htm");
 		} catch (IOException e) {
@@ -363,6 +396,55 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return "teamProfile";
+	}
+
+	@RequestMapping(value="/delete_player.htm")
+	public String deletePlayer(HttpServletRequest request,ModelMap model,HttpSession session) {
+		String pid = request.getParameter("playerId");
+		int playerId = Integer.parseInt(pid);
+		Player l = playerDao.selectOnePlayer(playerId);
+		
+		playerDao.deletePlayer(l);
+		
+		User user = (User)session.getAttribute("user");	
+	
+		Team specificTeam = teamDao.getTeam(user);
+		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
+		model.put("team", specificTeam);
+		return "teamProfile";
+		
+	}
+	
+	
+	@RequestMapping(value="/update_player.htm")
+	public String updatePlayer(Player player,ModelMap model,HttpSession session) {
+		
+		playerDao.updatePlayer(player);
+		List<Player> l = playerDao.selectAllPlayer();
+		model.put("plist", l);
+		
+		  User user = (User)session.getAttribute("user");
+		 
+		 Team specificTeam = teamDao.getTeam(user); session.setAttribute("playerList",
+		 playerDao.selectPlayerWithTeamId(specificTeam));
+		 model.put("team", specificTeam);
+		 
+		return "teamProfile";		
+		
+		
+		/*
+		 * List<Player> l = playerDao.selectAllPlayer(); model.put("plist", l); return
+		 * "teamProfile";
+		 */
+	}
+	
+	@RequestMapping(value="/select_player.htm")
+	public String updatePlayer(HttpServletRequest request,ModelMap model,Player player,HttpSession session) {
+		String pid = request.getParameter("playerId");
+		int playerId = Integer.parseInt(pid);
+		Player p = playerDao.selectOnePlayer(playerId);
+		model.put("player", p);
+		return "update_player_form";
 	}
 
 	@RequestMapping(value = "/preTeamForm.htm")
@@ -403,7 +485,7 @@ public class UserController {
 
 		try {
 
-			System.out.println(tournament + "********************************************");
+			
 			User user = (User) session.getAttribute("user");
 			Team currentTeam = teamDao.getTeam(user);
 			currentTeam.setTournamentId(tournament.getTournamentId());
@@ -430,19 +512,283 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/addOne.htm", method = RequestMethod.GET)
-	public void action(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId) {
+	public void addOne(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
 		
 		
 		Team team = teamDao.selectTeam(Long.parseLong(teamId));
 		team.getTeamScore();
 		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
-	    Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	    
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
 	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
 	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
 		
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
 		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);			
+		
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);
 				
 	}
+	
+	@RequestMapping(value = "/addTwo.htm", method = RequestMethod.GET)
+	public void addTwo(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	    
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
+	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+	    
+		System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);		
+	}
 	  
+	@RequestMapping(value = "/addThree.htm", method = RequestMethod.GET)
+	public void addThree(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	   
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
+	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);			
+	}
+	@RequestMapping(value = "/addFour.htm", method = RequestMethod.GET)
+	public void addFour(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	    
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
+	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+		player.setCurrentMatch_4s(player.getCurrentMatch_4s() + 1);
+		player.setTotal_4s(player.getTotal_4s() +1);
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);		
+	}
+	
+	@RequestMapping(value = "/addFive.htm", method = RequestMethod.GET)
+	public void addFive(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	   
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
+	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);			
+	}
+	
+	@RequestMapping(value = "/addSix.htm", method = RequestMethod.GET)
+	public void addSix(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	   
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
+	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+		player.setCurrentMatch_6s(player.getCurrentMatch_6s() + 1);
+		player.setTotal_6s(player.getTotal_6s() +1);
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);	
+	}
+	
+	@RequestMapping(value = "/addZero.htm", method = RequestMethod.GET)
+	public void addZero(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+	    
+		Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setPlayerCurrentScore(player.getPlayerCurrentScore() + Integer.parseInt(score) );
+	    player.setPlayerTotalRuns(player.getPlayerTotalRuns() + Integer.parseInt(score));
+		player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);		
+	}
+	
+	@RequestMapping(value = "/Wide.htm", method = RequestMethod.GET)
+	public void Wide(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+	    	    
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+		playerDao.updatePlayer(playerB);			
+	}
+	
+	@RequestMapping(value = "/NoBall.htm", method = RequestMethod.GET)
+	public void NoBall(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.getTeamScore();
+		team.setTeamScore(team.getTeamScore()+Long.parseLong(score));
+	    
+		Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		playerB.setBowlerCurrentRuns(playerB.getBowlerCurrentRuns() + 1);
+		playerB.setBowlerTotalRuns(playerB.getBowlerTotalRuns() + 1);
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+		playerDao.updatePlayer(playerB);			
+	}
+	
+	@RequestMapping(value = "/teamChange.htm", method = RequestMethod.GET)
+	public void status(HttpServletRequest request, HttpServletResponse response, @RequestParam("status") String status, @RequestParam("teamId") String teamId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		team.setTeamStatus(status);    
+	    	    
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+					
+	}
+	
+	
+	@RequestMapping(value = "/wicket.htm", method = RequestMethod.GET)
+	public void wicket(HttpServletRequest request, HttpServletResponse response, @RequestParam("score") String score, @RequestParam("teamId") String teamId , @RequestParam("playerId") String playerId, @RequestParam("playerBId") String playerBId) {
+		
+		
+		Team team = teamDao.selectTeam(Long.parseLong(teamId));
+		
+		team.setTotalWickets((team.getTotalWickets()) + Integer.parseInt(score));
+		team.setTotalBalls(team.getTotalBalls() + 1 );
+		
+	    Player player = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerId));
+	    player.setBatsmanCurrentBalls(player.getBatsmanCurrentBalls() + 1);
+	    player.setPlayerStatus("out");
+	    
+	    
+	    Player playerB = playerDao.selectPlayerWithPlayerId(Long.parseLong(playerBId));
+		
+		playerB.setCurrentMatchWickets(playerB.getCurrentMatchWickets() + 1);
+		playerB.setTotalWickets(playerB.getTotalWickets() + 1);
+		
+		
+		
+		
+	    System.out.println(team+"--------------------------");
+	    
+		teamDao.updateTeam(team);
+	
+		playerDao.updatePlayer(player);
+		playerDao.updatePlayer(playerB);			
+	}
 
 }

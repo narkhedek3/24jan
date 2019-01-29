@@ -138,10 +138,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				if(!teamList.isEmpty()){
 			%>
 			<div>
-				<spr:form action="teamSelection.htm" method="post" commandName="match" >
-					<spr:input path="team1Id" />
+				<spr:form action="teamSelection.htm" method="post" commandName="match" onsubmit="return validate()" >
+					<%-- <spr:input id="team1Id" path="team1Id" />
 					<label>VS</label>
-					<spr:input path="team2Id" />
+					<spr:input id="team2Id" path="team2Id" />
+					
+					<input type="submit" value="Submit"> --%>
+					
+					<spr:select path="team1Id" onchange="setTeam1Id(this)">
+						<% 
+							for(Team team : teamList){
+						%>
+						<spr:option value="<%=team.getTeamId()%>"><%=team.getTeamName() %></spr:option>
+						<%
+							}
+						%>
+					</spr:select>
+					<label>VS</label>
+					<spr:select path="team2Id" onchange="setTeam2Id(this)">
+						<% 
+							for(Team team : teamList){
+						%>
+						<spr:option value="<%=team.getTeamId()%>"><%=team.getTeamName() %></spr:option>
+						<%
+							}
+						%>
+					</spr:select>
 					<input type="submit" value="Submit">
 				</spr:form>
 			</div>
@@ -206,7 +228,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //tournamentEditModal --> --
     
 
-	<!-- //bootstrap-pop-up -->
+	<!-- //choose team js -->
+		<script type="text/javascript">
+		let selectedTeam1Id=null;
+		let selectedTeam2Id=null;
+		 function setTeam1Id(id)
+		{
+			
+			 selectedTeam1Id = id.value;
+			console.log(selectedTeam1Id);
+		}
+
+		function setTeam2Id(id)
+		{
+			
+			selectedTeam2Id = id.value;
+			console.log(selectedTeam2Id);
+		} 
+
+		function validate(){
+			console.log("validate");
+		if(selectedTeam1Id==selectedTeam2Id){
+			alert("Team should be different");
+			return false;
+			}
+		return true;
+		}
+	
+		</script>
 
 	<!-- js -->
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>

@@ -99,7 +99,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<tr>
 							<th scope="col">Player ID</th>
 							<th scope="col">Name</th>
-							<th scope="col">Matches</th>
+							<th scope="col">No. of 6's</th>
+							<th scope="col">No. of 4's</th>
 							<th scope="col">Runs</th>
 						</tr>
 					</thead>
@@ -114,8 +115,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<tr>
 							<th scope="row"><%= player.getPlayerId() %></th>
 							<td><%= player.getPlayerName() %></td>
-							<td></td>
-							<td>50</td>
+							<td><%=player.getTotal_6s()%></td>
+							<td><%=player.getTotal_4s()%></td>
+							<td><%=player.getPlayerTotalRuns()%></td>
+							<td><a href="delete_player.htm?playerId=<%=player.getPlayerId()%>" >Delete</a></td>
+						    <td><a href="select_player.htm?playerId=<%=player.getPlayerId()%>" >Update</a></td>
 						</tr>
 						<%
 							}

@@ -51,11 +51,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<h3 class="agileinfo_sign">Sign In</h3>
 		<div class="login-form">
 			<spr:form commandName="user" action="loginStatus.htm" method="post">
-				<spr:input placeholder="Email Id" required="" path="emailId" />
-				<spr:input type="password" placeholder="Password" required=""
+				<spr:input  type="email" placeholder="Email Id" required="true" path="emailId" />
+				<spr:input type="password" placeholder="Password" required="true"
 					path="password" />
-				<spr:select path="userRole" id="inputState" class="form-control">
-					<spr:option value="Choose"></spr:option>
+				<spr:select path="userRole" id="inputState" class="form-control" required="true">
+					<spr:option value="" disabled="true" hidden="true" selected="selected">Choose</spr:option>
 					<spr:option value="Tournament Representative"></spr:option>
 					<spr:option value="Team Representative"></spr:option>
 				</spr:select>

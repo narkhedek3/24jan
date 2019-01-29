@@ -58,17 +58,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="signin-form profile">
 					<h3 class="agileinfo_sign">Sign Up</h3>
 					<div class="login-form">
-						<spr:form commandName="user" action="signup.htm" method="post">
+						<spr:form commandName="user" action="signup.htm" method="post" onsubmit="return validate()">
 							<spr:input type="text" name="name" placeholder="Username"
-								required="" path="userName" />
+								required="true" path="userName" />
 							<spr:input type="email" name="email" placeholder="Email"
-								required="" path="emailId" />
+								required="true" path="emailId" />
 							<spr:input type="password" id="password" placeholder="Password"
-								required="" path="password" />
+								required="true" path="password" />
 							<input type="password" id="confirmPassword"
-								placeholder="Confirm Password" >
-							<spr:select path="userRole" id="inputState" class="form-control">
-								<spr:option value="Choose"></spr:option>
+								placeholder="Confirm Password" required="true" >
+								
+							<spr:select path="userRole" id="inputState" class="form-control" required="true">
+								<spr:option value="" disabled="true" hidden="true" selected="selected">Choose</spr:option>
 								<spr:option value="Tournament Representative"></spr:option>
 								<spr:option value="Team Representative"></spr:option>
 							</spr:select>
@@ -95,6 +96,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //bootstrap-pop-up -->
 
 	<!-- js -->
+	<script type="text/javascript">
+
+		function validate()
+		{
+			var password = document.getElementById("password").value;
+			var confirmPassword = document.getElementById("confirmPassword").value;
+
+			if(password!=confirmPassword)
+			{
+				alert("password not matched");
+				return false;
+			}
+
+			return true;
+			
+		}
+		
+	</script>
+	
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<!-- //js -->
 	<!-- start-smooth-scrolling -->

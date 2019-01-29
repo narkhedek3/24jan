@@ -8,6 +8,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
 
@@ -109,11 +112,24 @@
 	<jsp:include page="footer.jsp"></jsp:include>
 
 
-
-
-	<!-- //bootstrap-pop-up -->
+	<!-- date validation by date picker -->>
+	<script>
+		var minDate = new Date();
+		$(document).ready(function() {
+			$("#sdate").datepicker({
+			showAnim:'drop',
+			minDate: -1,
+			numberOfMonths: 1,
+			dateFormat: 'dd/mm/yyyy',
+			onclose: function(selectedDate)
+			{
+				$("#edate").datepicker("option","minDate",selectedDate);
+				}
+				})
+			});
 	
-	
+	</script>
+
 	<script type="text/javascript">
 		function validate() {
 		    var name = document.getElementById("name").value;
@@ -251,10 +267,10 @@
 
 
 
-		</script>
-	
+		</script> 
+	 
 
-	<!-- js -->
+	
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<!-- //js -->
 	<!-- Counter required files -->

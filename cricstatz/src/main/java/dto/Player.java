@@ -14,7 +14,7 @@ public class Player {
 	private long playerId;
 	private String playerName;
 	private long teamId;
-	private boolean battingStatus;
+	private String playerStatus;
 	private int playerTotalRuns;
 	private double playerAverage;
 	private boolean inPlaying_11;
@@ -28,8 +28,10 @@ public class Player {
 	private boolean currentBatsMan;
 	private boolean currentBowler;
 	private int currentBallsByBowler;
+	private int bowlerCurrentRuns;
 	private int bowlerTotalRuns;
 	private int batsmanCurrentBalls;
+	private String playerImage; 
 	
 	public Player() {
 		super();
@@ -40,15 +42,19 @@ public class Player {
 		this.playerId = playerId;
 	}
 
-	public Player(long playerId, String playerName, long teamId, boolean battingStatus, int playerTotalRuns,
+	
+
+	
+	public Player(long playerId, String playerName, long teamId, String playerStatus, int playerTotalRuns,
 			double playerAverage, boolean inPlaying_11, int playerCurrentScore, int currentMatch_4s, int total_4s,
 			int currentMatch_6s, int total_6s, int currentMatchWickets, int totalWickets, boolean currentBatsMan,
-			boolean currentBowler, int currentBallsByBowler, int bowlerTotalRuns, int batsmanCurrentBalls) {
+			boolean currentBowler, int currentBallsByBowler, int bowlerCurrentRuns, int bowlerTotalRuns,
+			int batsmanCurrentBalls, String playerImage) {
 		super();
 		this.playerId = playerId;
 		this.playerName = playerName;
 		this.teamId = teamId;
-		this.battingStatus = battingStatus;
+		this.playerStatus = playerStatus;
 		this.playerTotalRuns = playerTotalRuns;
 		this.playerAverage = playerAverage;
 		this.inPlaying_11 = inPlaying_11;
@@ -62,8 +68,18 @@ public class Player {
 		this.currentBatsMan = currentBatsMan;
 		this.currentBowler = currentBowler;
 		this.currentBallsByBowler = currentBallsByBowler;
+		this.bowlerCurrentRuns = bowlerCurrentRuns;
 		this.bowlerTotalRuns = bowlerTotalRuns;
 		this.batsmanCurrentBalls = batsmanCurrentBalls;
+		this.playerImage = playerImage;
+	}
+
+	public int getBowlerCurrentRuns() {
+		return bowlerCurrentRuns;
+	}
+
+	public void setBowlerCurrentRuns(int bowlerCurrentRuns) {
+		this.bowlerCurrentRuns = bowlerCurrentRuns;
 	}
 
 	public long getPlayerId() {
@@ -90,12 +106,12 @@ public class Player {
 		this.teamId = teamId;
 	}
 
-	public boolean isBattingStatus() {
-		return battingStatus;
+	public String getPlayerStatus() {
+		return playerStatus;
 	}
 
-	public void setBattingStatus(boolean battingStatus) {
-		this.battingStatus = battingStatus;
+	public void setPlayerStatus(String playerStatus) {
+		this.playerStatus = playerStatus;
 	}
 
 	public int getPlayerTotalRuns() {
@@ -217,18 +233,31 @@ public class Player {
 	public void setBatsmanCurrentBalls(int batsmanCurrentBalls) {
 		this.batsmanCurrentBalls = batsmanCurrentBalls;
 	}
+	
+
+	public String getPlayerImage() {
+		return playerImage;
+	}
+
+	public void setPlayerImage(String playerImage) {
+		this.playerImage = playerImage;
+	}
 
 	@Override
 	public String toString() {
-		return "Player [playerId=" + playerId + ", playerName=" + playerName + ", teamId=" + teamId + ", battingStatus="
-				+ battingStatus + ", playerTotalRuns=" + playerTotalRuns + ", playerAverage=" + playerAverage
+		return "Player [playerId=" + playerId + ", playerName=" + playerName + ", teamId=" + teamId + ", playerStatus="
+				+ playerStatus + ", playerTotalRuns=" + playerTotalRuns + ", playerAverage=" + playerAverage
 				+ ", inPlaying_11=" + inPlaying_11 + ", playerCurrentScore=" + playerCurrentScore + ", currentMatch_4s="
 				+ currentMatch_4s + ", total_4s=" + total_4s + ", currentMatch_6s=" + currentMatch_6s + ", total_6s="
 				+ total_6s + ", currentMatchWickets=" + currentMatchWickets + ", totalWickets=" + totalWickets
 				+ ", currentBatsMan=" + currentBatsMan + ", currentBowler=" + currentBowler + ", currentBallsByBowler="
-				+ currentBallsByBowler + ", bowlerTotalRuns=" + bowlerTotalRuns + ", batsmanCurrentBalls="
-				+ batsmanCurrentBalls + "]";
+				+ currentBallsByBowler + ", bowlerCurrentRuns=" + bowlerCurrentRuns + ", bowlerTotalRuns="
+				+ bowlerTotalRuns + ", batsmanCurrentBalls=" + batsmanCurrentBalls + ", playerImage=" + playerImage
+				+ "]";
 	}
+
+	
+	
 	
 	
 	

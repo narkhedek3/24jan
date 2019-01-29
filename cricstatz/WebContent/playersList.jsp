@@ -1,143 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@page import="dto.Player"%>
 <%@page import="java.util.List"%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
-	<title>Tennis Court a Sports Category Flat Bootstrap Responsive Website Template | Mail :: w3layouts</title>
-	<!-- custom-theme -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="Tennis Court Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
-	<!-- //custom-theme -->
-	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-	<!-- font-awesome-icons -->
-	<link href="css/font-awesome.css" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900" rel="stylesheet">
 
-	<link href="css/table.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css" />
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+<script type="text/javascript" charset="utf-8"
+	style="table-layout: fixed; background-color: black;">
+	$(document).ready(function() {
+		$('#example').dataTable();
+	});
+</script>
+
+
+<title>Insert title here</title>
+
+<style>
+</style>
 </head>
-
 <body>
-	<!-- banner -->
-	<jsp:include page="header.jsp"></jsp:include>
-	
-	
-	<!-- /banner -->
-	<div class="banner1">
-		<div class="wthree_banner1_info">
-			<h3><span>P</span>layers List</h3>
+
+	<div class="container">
+		<div class="row">
+
+
+			<div class="col-md-12">
+				<h4 style="align-content: center;">Players List</h4>
+				<div class="table-responsive">
+					<form action="/cricstatz/index.jsp" class="inline">
+						<button class="btn btn-primary" style="margin-bottom: 5px">Back</button>
+					</form>
+
+					<table id="example" class="table table-bordred table-striped"
+						style="background-color: black;">
+						<thead>
+
+							<th>Player ID</th>
+							<th>Name</th>
+							<th>No. of 4's</th>
+							<th>No. of 6's</th>
+							<th>Runs</th>
+
+
+						</thead>
+						<tbody>
+							<%
+								List<Player> list = (List<Player>) request.getAttribute("playerList");
+								if (list != null) {
+									for (Player player : list) {
+							%>
+
+							<tr>
+								<td><%=player.getPlayerId()%></td>
+								<td><%=player.getPlayerName()%></td>
+								<td><%=player.getTotal_4s()%></td>
+								<td><%=player.getTotal_6s()%></td>
+								<td><%=player.getPlayerTotalRuns()%></td>
+							</tr>
+
+
+
+							<%
+								}
+								}
+							%>
+						
+					</table>
+				</div>
+
+
+			</div>
 		</div>
 	</div>
-	<!-- //banner -->
-	<!-- Players List -->
-	
-	<div style="display: flex">
-		<div style="flex:1">
-		</div>
-		<div style="margin-top:10px">
-			<input type="text" style="border-radius: 10px" placeholder="Player Search" id="Search">
-			
-			<button type="submit" id="show" class="btn btn-primary" value="search">Search</button>
-		</div>
-	</div>
-
-	<br />
 
 
-	
-
-	<div style="margin-left: 250px; margin-right: 250px">
-		<table class="table table-sm table-primary" style="border-top: 1px solid gray">
-			<thead>
-				<tr>
-					<th scope="col">Player ID</th>
-					<th scope="col">Name</th>
-					<th scope="col">No. of 4's</th>
-					<th scope="col">No. of 6's</th>
-					<th scope="col">Runs</th>
-					<th scope="col">Location</th>
-				</tr>
-			</thead>
-	<%  List<Player> list = (List<Player>)request.getAttribute("playerList");
-	System.out.println(list+"playerlist+**+*+**+*+*+*+**+*");
-		if(list!=null)
-		{
-			for(Player player: list)
-			{
-	%>
-			<tbody>
-				<tr>
-					<th scope="row">10</th>
-					<td><%=player.getPlayerId() %></td>
-					<td><%=player.getPlayerName() %></td>
-					<td><%=player.getTotal_4s() %></td>
-					<td><%=player.getTotal_6s() %></td>
-					<td><%=player.getPlayerTotalRuns() %></td>
-				</tr>
-
-			</tbody>
-			
-<%
-		}
-	}
-%>
-		</table>
-	</div>
-
-
-
-	<!-- Players List -->
-	<!-- footer -->
-	<jsp:include page="footer.jsp"></jsp:include>
-	<!-- //footer -->
-
-	
-	<!-- //bootstrap-pop-up -->
-
-	<!-- js -->
-	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-	<!-- //js -->
-	<!-- start-smooth-scrolling -->
-	<script type="text/javascript" src="js/move-top.js"></script>
-	<script type="text/javascript" src="js/easing.js"></script>
-	<script type="text/javascript">
-		jQuery(document).ready(function ($) {
-			$(".scroll").click(function (event) {
-				event.preventDefault();
-				$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
-			});
-		});
-	</script>
-	<!-- start-smooth-scrolling -->
-	<!-- for bootstrap working -->
-	<script src="js/bootstrap.js"></script>
-	<!-- //for bootstrap working -->
-	<!-- here stars scrolling icon -->
-	<script type="text/javascript">
-		$(document).ready(function () {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
-
-			$().UItoTop({ easingType: 'easeOutQuart' });
-
-		});
-	</script>
-	<!-- //here ends scrolling icon -->
 </body>
 
 </html>
+
+

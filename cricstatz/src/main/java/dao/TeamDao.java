@@ -50,7 +50,7 @@ public class TeamDao {
 		hibernateTemplate.execute(new HibernateCallback<List<Team>>() {
 
 			public List<Team> doInHibernate(Session session) throws HibernateException {
-				System.out.println("****************************");
+				System.out.println(team+"++++++++++++++++++++++++++++++");
 				Transaction t = session.beginTransaction();
 				session.update(team);
 				t.commit();

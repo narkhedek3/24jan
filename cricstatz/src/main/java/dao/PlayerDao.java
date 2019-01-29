@@ -51,7 +51,7 @@ public class PlayerDao {
 				Transaction t = session.beginTransaction();
 				Query q = session.createQuery("from Player");
 				List<Player> playerList = q.list();
-				System.out.println(playerList+"  ///////////////////////");
+				
 				t.commit();
 				session.flush();
 				session.close();
@@ -98,4 +98,53 @@ public class PlayerDao {
 		});
 		return list;
 	}
+	
+	public void updatePlayer(final Player player) {
+		hibernateTemplate.execute(new HibernateCallback<List<Team>>() {
+
+			public List<Team> doInHibernate(Session session) throws HibernateException {
+				System.out.println(player+"playerDao****************************");
+				Transaction t = session.beginTransaction();
+				session.update(player);
+				t.commit();
+				session.flush();
+				session.close();
+				return null;
+			}
+		});
+	}
+	
+	public Player selectOnePlayer(int playerId) {
+		   Player p = hibernateTemplate.execute(new HibernateCallback<Player>() {
+
+				public Player doInHibernate(Session session) throws HibernateException {
+					Transaction t = session.beginTransaction();
+					Query q = session.createQuery("from Player where playerId= ?");
+					q.setLong(0, playerId);
+					Player player=(Player)q.list().get(0);
+					//Player p = (Player)session.get(Player.class, playerId);
+					t.commit();
+					session.flush();
+					session.close();
+					return player;
+				}
+			});
+			return p;
+		}
+	
+	public void deletePlayer(final Player player) {
+		hibernateTemplate.execute(new HibernateCallback<List<Player>>() {
+
+			public List<Player> doInHibernate(Session session) throws HibernateException {
+				Transaction t = session.beginTransaction();
+				session.delete(player);
+				t.commit();
+				session.flush();
+				session.close();
+				return null;
+			}
+		});
+	}
+
+	
 }

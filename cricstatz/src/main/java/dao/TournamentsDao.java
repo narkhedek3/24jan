@@ -98,7 +98,7 @@ public class TournamentsDao {
 				Query q = session.createQuery("from Team where tournamentId = ?");
 				q.setLong(0,tournament.getTournamentId());
 				List<Team> teamList = q.list();
-				System.out.println(teamList+"++++++++++++++");
+				
 				t.commit();
 				session.flush();
 				session.close();
@@ -112,7 +112,7 @@ public class TournamentsDao {
 		hibernateTemplate.execute(new HibernateCallback<List<Tournament>>() {
 
 			public List<Tournament> doInHibernate(Session session) throws HibernateException {
-				System.out.println("****************************");
+			
 				Transaction t = session.beginTransaction();
 				session.update(tournament);
 				t.commit();

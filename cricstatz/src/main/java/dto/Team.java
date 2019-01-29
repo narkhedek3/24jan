@@ -27,6 +27,24 @@ public class Team {
 	private String totalMatchResults;
 	private double netRunRate;
 	private long teamScore;
+	private int totalWickets;
+	private int totalBalls;
+	public int getTotalWickets() {
+		return totalWickets;
+	}
+
+	public void setTotalWickets(int totalWickets) {
+		this.totalWickets = totalWickets;
+	}
+
+	public int getTotalBalls() {
+		return totalBalls;
+	}
+
+	public void setTotalBalls(int totalBalls) {
+		this.totalBalls = totalBalls;
+	}
+
 	public Team() {
 		super();
 	}
@@ -53,14 +71,17 @@ public class Team {
 	}
 
 
-	public Team(String emailId, long teamId, String teamName, String status, double currentRunrate, long tournamentId,
-			Date matchDate, String teamInningStatus, int totalMatches, String totalMatchResults, double netRunRate,
-			long teamScore) {
+	
+
+	public Team(long teamId, String emailId, String password, String teamName, String teamStatus, double currentRunrate,
+			long tournamentId, Date matchDate, String teamInningStatus, int totalMatches, String totalMatchResults,
+			double netRunRate, long teamScore, int totalWickets, int totalBalls) {
 		super();
-		this.emailId = emailId;
 		this.teamId = teamId;
+		this.emailId = emailId;
+		this.password = password;
 		this.teamName = teamName;
-		this.teamStatus = status;
+		this.teamStatus = teamStatus;
 		this.currentRunrate = currentRunrate;
 		this.tournamentId = tournamentId;
 		this.matchDate = matchDate;
@@ -69,6 +90,8 @@ public class Team {
 		this.totalMatchResults = totalMatchResults;
 		this.netRunRate = netRunRate;
 		this.teamScore = teamScore;
+		this.totalWickets = totalWickets;
+		this.totalBalls = totalBalls;
 	}
 
 	public String getEmailId() {
@@ -169,11 +192,14 @@ public class Team {
 
 	@Override
 	public String toString() {
-		return "Team [teamId=" + teamId + ", emailId=" + emailId + ", teamName=" + teamName + ", teamStatus=" + teamStatus
-				+ ", currentRunrate=" + currentRunrate + ", tournamentId=" + tournamentId + ", matchDate=" + matchDate
-				+ ", teamInningStatus=" + teamInningStatus + ", totalMatches=" + totalMatches + ", totalMatchResults="
-				+ totalMatchResults + ", netRunRate=" + netRunRate + ", teamScore=" + teamScore + "]";
+		return "Team [teamId=" + teamId + ", emailId=" + emailId + ", password=" + password + ", teamName=" + teamName
+				+ ", teamStatus=" + teamStatus + ", currentRunrate=" + currentRunrate + ", tournamentId=" + tournamentId
+				+ ", matchDate=" + matchDate + ", teamInningStatus=" + teamInningStatus + ", totalMatches="
+				+ totalMatches + ", totalMatchResults=" + totalMatchResults + ", netRunRate=" + netRunRate
+				+ ", teamScore=" + teamScore + ", totalWickets=" + totalWickets + ", totalBalls=" + totalBalls + "]";
 	}
+
+	
 	
 	
 	
