@@ -812,6 +812,7 @@ public class UserController {
 		
 		playerB.setCurrentMatchWickets(playerB.getCurrentMatchWickets() + 1);
 		playerB.setTotalWickets(playerB.getTotalWickets() + 1);
+		playerB.setCurrentBallsByBowler(playerB.getCurrentBallsByBowler() + 1);
 		
 		
 		

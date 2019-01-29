@@ -530,14 +530,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		let team2Score =0;
 		let team1Wicket=0;
 		let team2Wicket=0;
-		team1Score = document.getElementById("team1Score").innerHTML;
-		team2Score = document.getElementById("team2Score").innerHTML ;
 		
-		document.getElementById("team1Score").innerHTML = team1Score;
-		document.getElementById("team2Score").innerHTML = team2Score;
-
-		document.getElementById("team1Wicket").innerHTML = team1Wicket;
-		document.getElementById("team2Wicket").innerHTML = team2Wicket;
+		
+		
 
 		function selectTeam1(id){
 				if(id==team1Id){
