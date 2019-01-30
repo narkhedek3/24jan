@@ -38,6 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<!-- //banner -->
+	
 	<div class="banner1" style="margin-bottom: 10px">
 		<div class="wthree_banner1_info">
 			<h3><span>L</span>ive Scores</h3>
@@ -45,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 
 	<!--card-->
-	
+		
 
 	<div class="container" style="width:300px; height: 260px;border: 2px solid black;">
 		<%
@@ -86,7 +87,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 
 			<div class="card-header">
-				<h5><%=match.getMatchId() %></h5>
+				
 			</div>
 			<div class="card-body" style="width:100%">
 				<h4 class="make-center" style="background: #09347a;; color:whitesmoke;width: 100%">

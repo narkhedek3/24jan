@@ -255,6 +255,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
+
+	
+	
     $(document).ready(function(){
        
     	  $('#addOne').click(function(e) {

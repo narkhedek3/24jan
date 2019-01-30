@@ -57,12 +57,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<h3 class="agileinfo_sign">Player Form</h3>
 		<div class="login-form">
 			<spr:form commandName="player" action="createPlayer.htm" method="post" enctype="multipart/form-data">
-				<spr:input placeholder="Player Name" pattern="^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$" required="" path="playerName" />			
+				<spr:input placeholder="Player Name"  required="" path="playerName" />			
 				<spr:input readonly="true" path="teamId" value="<%=player.getTeamId() %>"/>				
-				<input type="number" min="10" max="90" placeholder="Age"  />
-							
-				<div class="tp">
-				<input type="file" name="file" >
+				<input type="number" min="10" max="90" placeholder="Age"  /><br>
+				<input type="file" name="file" accept="image/jpeg" required="true" > Verification Image							
+				<div class="tp">			
 					<input type="submit" value="Create">
 				</div>
 			</spr:form>

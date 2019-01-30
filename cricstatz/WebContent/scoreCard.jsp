@@ -4,6 +4,7 @@
 <%@ page import="dto.Player" %>
 <%@ page import="dto.Team" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="spr" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -58,13 +59,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 %>
 
 
-<div class="container" style="width:300px; height: 140px;border: 2px solid black;">
-
-		<div class="card ">
+<div class="container" style="width:300px; height: 180px;border: 2px solid black;">
+		
 			
+		
+		<div class="card">			
 
 			<div class="card-header" style="text-align: center">
-				<h3><%= tournamentName %></h3>
+				<h3><%= tournamentName %>
+				</h3>
+				<spr:form commandName="matchDetails" class="make-center" action="viewScoreCard.htm" method="post">
+						<spr:hidden path="matchId" value="<%=match.getMatchId() %>"/>
+						<input type="submit" value="Refresh" class="btn btn-primary" />
+			</spr:form>			
 			</div>
 			<br>
 			<div class="card-body" style="width:100% " >
@@ -73,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<h3>VS</h3>
 				<button type="button" id="team2" style="height: 30px; width: 100%"class="btn btn-primary " onclick="selectTeam2(<%=team2.getTeamId()%>)"><%=team2.getTeamName()%></button>		
 				
-			</div>
+			</div>			
 			<br>
 			
 			

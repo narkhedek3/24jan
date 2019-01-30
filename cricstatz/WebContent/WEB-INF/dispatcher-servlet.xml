@@ -34,8 +34,7 @@
 			<list>
 				<value>dto.MatchDetails</value>
 				<value>dto.Player</value>
-				<value>dto.PointTable</value>
-				<value>dto.ScheduleTable</value>
+				
 				<value>dto.ScoreCard</value>
 				<value>dto.Team</value>
 				<value>dto.Tournament</value>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sound.midi.Soundbank;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -152,11 +153,7 @@ public class UserController {
 			}
 
 		} catch (Exception e) {
-
-			// validation
-
 			userDao.createUser(user);
-
 		}
 		return "index";
 	}
@@ -200,7 +197,7 @@ public class UserController {
 				}
 			}
 		} catch (Exception exp) {
-
+			return "loginPage";
 		}
 
 		return "loginPage";
@@ -262,8 +259,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/teamSelection.htm")
-	public String teamSelect(MatchDetails match, ModelMap model) {
-		
+	public String teamSelect(MatchDetails match, ModelMap model,HttpServletResponse response) {
+		try {
 		matchDetailsDao.createMatch(match);
 		Team team1 =teamDao.selectTeam(match.getTeam1Id());
 		Team team2 =teamDao.selectTeam(match.getTeam2Id());
@@ -275,6 +272,14 @@ public class UserController {
 		model.addAttribute("playerTeam1List",  playerDao.selectPlayerWithTeamId(team1));
 		model.addAttribute("playerTeam2List",  playerDao.selectPlayerWithTeamId(team2));
 		model.put("matchDetails", new MatchDetails());
+		
+		}catch (Exception e) {
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e1) {
+				return "ErrorPage";
+			}
+		}
 		return "scoreUpdater";
 	}
 
@@ -348,28 +353,40 @@ public class UserController {
 
 	@RequestMapping(value = "/tournaments.htm")
 	public String showTournamentList(ModelMap model, HttpSession session, HttpServletResponse response,
-			HttpServletRequest request) {
+			HttpServletRequest request) 
+	{
 		List<Tournament> tournamentList = tournamentsDao.selectTournaments();
-		if (session.getAttribute("user") != null) {
-			User user = (User) session.getAttribute("user");
-			Team currentTeam = teamDao.getTeam(user);
-		
-			if(currentTeam!=null)
-			{
-				model.addAttribute("teams", currentTeam);
-			}
-			else
+		try {
+			
+			if (session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				Team currentTeam = teamDao.getTeam(user);
+			
+				if(currentTeam!=null)
 				{
-				model.addAttribute("teams", new Team());
+					model.addAttribute("teams", currentTeam);
 				}
-			model.addAttribute("currentUser", session.getAttribute("user"));
-			model.addAttribute("userRole", user.getUserRole());
-			model.addAttribute("tournament", new Tournament());
-			model.addAttribute("tournamentList", tournamentList);
+				else
+					{
+					model.addAttribute("teams", new Team());
+					}
+				model.addAttribute("currentUser", session.getAttribute("user"));
+				model.addAttribute("userRole", user.getUserRole());
+				model.addAttribute("tournament", new Tournament());
+				model.addAttribute("tournamentList", tournamentList);
 
-			return "tournaments";
+				return "tournaments";
 
+			}
+			
+		} catch (Exception e) {
+			
+			
+			return "ErrorPage";
+			
 		}
+		
+
 
 		model.addAttribute("teams", new Team());
 		model.addAttribute("tournamentList", tournamentList);
@@ -378,8 +395,12 @@ public class UserController {
 
 	@RequestMapping(value = "/playersList.htm")
 	public String showplayersList(ModelMap model, HttpSession session) {
+		try {
 		model.addAttribute("playerList", playerDao.selectAllPlayer());
-		
+		}catch (Exception e) {
+			System.out.println(e);
+			return "ErrorPage";
+		}
 		return "playersList";
 	}
 
@@ -436,7 +457,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/delete_player.htm")
-	public String deletePlayer(HttpServletRequest request,ModelMap model,HttpSession session) {
+	public String deletePlayer(HttpServletRequest request,ModelMap model,HttpSession session,HttpServletResponse response) {
+		if(session.getAttribute("user")!=null)
+		{
 		String pid = request.getParameter("playerId");
 		int playerId = Integer.parseInt(pid);
 		Player l = playerDao.selectOnePlayer(playerId);
@@ -448,14 +471,24 @@ public class UserController {
 		Team specificTeam = teamDao.getTeam(user);
 		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
 		model.put("team", specificTeam);
+		}else
+		{
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e) {
+			
+			}
+		}
 		return "teamProfile";
 		
 	}
 	
 	
 	@RequestMapping(value="/update_player.htm")
-	public String updatePlayer(Player player,ModelMap model,HttpSession session) {
+	public String updatePlayer(Player player,ModelMap model,HttpSession session,HttpServletResponse response) {
 		
+		if(session.getAttribute("user")!=null)
+		{
 		playerDao.updatePlayer(player);
 		List<Player> l = playerDao.selectAllPlayer();
 		model.put("plist", l);
@@ -465,7 +498,15 @@ public class UserController {
 		 Team specificTeam = teamDao.getTeam(user); session.setAttribute("playerList",
 		 playerDao.selectPlayerWithTeamId(specificTeam));
 		 model.put("team", specificTeam);
-		 
+		}else
+		{
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+		}
 		return "teamProfile";		
 		
 		
@@ -476,24 +517,44 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/select_player.htm")
-	public String updatePlayer(HttpServletRequest request,ModelMap model,Player player,HttpSession session) {
+	public String updatePlayer(HttpServletRequest request,HttpServletResponse response,ModelMap model,Player player,HttpSession session) {
+		if(session.getAttribute("user")!=null) {
 		String pid = request.getParameter("playerId");
 		int playerId = Integer.parseInt(pid);
 		Player p = playerDao.selectOnePlayer(playerId);
 		model.put("player", p);
+		}else {
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+		}
 		return "update_player_form";
 	}
 
 	@RequestMapping(value = "/preTeamForm.htm")
-	public String showTeamForm(ModelMap model) {
+	public String showTeamForm(ModelMap model,HttpSession session,HttpServletResponse response) {
+		if(session.getAttribute("user")!=null)
+		{
 		model.put("team", new Team());
+		}else {
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return "teamForm";
 	}
 
 	@RequestMapping(value = "/postTeamForm.htm")
-	public String TeamFormSuccess(Team team, ModelMap model, HttpSession session, HttpServletResponse response) {
+	public String TeamFormSuccess(Team team,HttpServletResponse response, ModelMap model, HttpSession session) {
+		
+		if(session.getAttribute("user")!=null)
+		{
 		teamDao.createTeam(team);
-
 		User user = (User) session.getAttribute("user");
 		Team specificTeam = teamDao.getTeam(user);
 		session.setAttribute("playerList", playerDao.selectPlayerWithTeamId(specificTeam));
@@ -502,8 +563,16 @@ public class UserController {
 		try {
 			response.sendRedirect("teamProfile.htm");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+		}
+		}else {
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 		}
 
 		return "teamProfile";
@@ -530,8 +599,12 @@ public class UserController {
 
 			response.sendRedirect("tournaments.htm");
 		} catch (Exception e) {
-
-			e.printStackTrace();
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		return "tournaments";
 	}
@@ -828,7 +901,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/matchResult.htm")
 	public String endMatch(HttpServletRequest request, HttpServletResponse response, MatchDetails match1,ModelMap model) {
-		
+		try {
 		MatchDetails match =  matchDetailsDao.selectMatchWithTeamId(match1.getMatchId());
 		Team team1 = teamDao.selectTeam(match.getTeam1Id());
 		Team team2 = teamDao.selectTeam(match.getTeam2Id());
@@ -885,6 +958,9 @@ public class UserController {
 			model.put("team",team1);
 		}		
 		matchDetailsDao.deleteMatch(match);
+		}catch (Exception e) {
+			return "index";
+		}
 		return "matchResult";
 	}
 

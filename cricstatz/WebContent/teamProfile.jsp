@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
+
 <head>
 <title>Team Profile</title>
 <!-- custom-theme -->
@@ -67,8 +68,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>TEAM
 								ID : <%= team.getTeamId() %>
 							</li>
-							<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>NUMBER
-								OF PLAYERS : </li>
+							
 							<%
 								if(team.getTournamentId()!=0){
 							%>
@@ -228,5 +228,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</script>
 	<!-- //here ends scrolling icon -->
 </body>
+
+
 
 </html>
