@@ -405,13 +405,30 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/playerForm.htm")
-	public String showplayerForm(ModelMap model, HttpSession session) {
-
+	public String showplayerForm(ModelMap model, HttpSession session,HttpServletResponse response) {
+		try {
+		if(session.getAttribute("user")!=null)
+		{
 		User user = (User) session.getAttribute("user");
 		Team specificTeam = teamDao.getTeam(user);
 		Player player = new Player();
 		player.setTeamId(specificTeam.getTeamId());
 		model.put("player", player);
+		}else{
+			try{
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		}catch (Exception e) {
+			try {
+				response.sendRedirect("loginPage.htm");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		return "playerForm";
 	}
 
